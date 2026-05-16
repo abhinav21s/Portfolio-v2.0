@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useMerkleTree } from '../store/merkleStore'
 import { shortenHash } from '../utils/merkleTree'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 
 function TreeNode({ node, level, isHighlighted, onSelect, showTamperDemo, position, onPositionCalculated }) {
   const nodeRef = useRef(null)
@@ -19,7 +19,7 @@ function TreeNode({ node, level, isHighlighted, onSelect, showTamperDemo, positi
         })
       }
     }
-  }, [node.id, onPositionCalculated])
+  }, [node.id]) // Removed onPositionCalculated from dependencies
 
   if (!node) return null
 

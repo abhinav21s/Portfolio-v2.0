@@ -2,21 +2,25 @@
 
 export const personalInfo = {
   name: "Abhinav Sharma",
-  title: "Backend & Blockchain Engineer",
-  tagline: "Building immutable systems with disciplined precision.",
-  email: "abhinav@example.com",
-  location: "India",
-  photo: "/profile.jpg", // Add your photo to public folder
+  title: "Full Stack Developer",
+  tagline: "Building reliable, scalable systems from backend to blockchain.",
+  email: "abhinavsharma.work21@gmail.com",
+  location: "Bengaluru,India",
+  photo: "/profile.webp", // Add your photo to public folder
   bio: [
-    "I'm a backend engineer with a deep fascination for blockchain technology and distributed systems. My journey into engineering was shaped by years of competitive athletics at the state level, where I learned that excellence comes from disciplined, consistent effort.",
-    "As a former school house captain and athlete, I bring the same focus and integrity to code that I brought to the track. I believe in building systems that are not just functional, but immutable, verifiable, and elegant.",
-    "When I'm not architecting backend systems or exploring consensus algorithms, you'll find me experimenting in the kitchen, swimming, or refining my personal style—all pursuits that teach patience, precision, and continuous improvement."
+    "I am a Full Stack Engineer with a strong focus on backend systems and a growing expertise in blockchain and Web3 technologies. I design and develop end-to-end applications that are secure, scalable, and performant.",
+    
+    "My journey in technology is deeply influenced by my background as a state-level athlete and former school house captain. The discipline, consistency, and attention to detail I developed on the track now drive how I approach system design and problem-solving.",
+    
+    "Currently, I build production-grade full stack applications while actively working on Web3 projects — from smart contracts to decentralized applications. I believe in creating systems that are not only functional but also verifiable and resilient.",
+    
+    "Outside of coding, I enjoy cooking, swimming, and experimenting with design and personal style — activities that keep me balanced and sharpen my focus."
   ],
   social: {
-    github: "https://github.com/abhinavsharma",
-    linkedin: "https://linkedin.com/in/abhinavsharma",
-    twitter: "https://twitter.com/abhinavsharma",
-    email: "abhinav@example.com"
+    github: "https://github.com/abhinav21s",
+    linkedin: "https://www.linkedin.com/in/abhinav-sharma-197a213b9",
+    twitter: "https://x.com/abhinav_21s",
+    email: "abhinavsharma.work21@gmail.com"
   }
 }
 
