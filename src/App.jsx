@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Hero from './components/Hero'
 import About from './components/About'
 import Skills from './components/Skills'
+import Projects from './components/Projects'
 import MerkleTreeSection from './components/MerkleTreeSection'
 import Experience from './components/Experience'
 import BeyondTheChain from './components/BeyondTheChain'
@@ -16,6 +17,7 @@ function App() {
         <Hero />
         <About />
         <Skills />
+        <Projects />
         <MerkleTreeSection />
         <Experience />
         <BeyondTheChain />
