@@ -20,7 +20,7 @@ export default {
       },
       fontFamily: {
         'sans': ['Inter', 'system-ui', 'sans-serif'],
-        'display': ['Satoshi', 'Inter', 'system-ui', 'sans-serif'],
+        'display': ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif'],
         'mono': ['JetBrains Mono', 'monospace'],
       },
       animation: {

@@ -10,7 +10,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 6rem;
+  scroll-padding-top: 5rem;
 }
 
 body {
@@ -24,7 +24,7 @@ body {
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -33,88 +33,74 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, #22D3EE 0%, #14B8A6 100%);
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, #14B8A6 0%, #22D3EE 100%);
 }
 
-/* Reduced motion support */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-/* Selection color */
-::selection {
-  background-color: rgba(34, 211, 238, 0.3);
-  color: #F1F5F9;
-}
-
-::-moz-selection {
-  background-color: rgba(34, 211, 238, 0.3);
-  color: #F1F5F9;
-}
-
-/* Smooth transitions */
-.smooth-transition {
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
 /* Typography improvements */
 h1, h2, h3, h4, h5, h6 {
+  font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
   font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: 0;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
 }
 
 p {
-  line-height: 1.7;
+  line-height: 1.6;
+  color: #94A3B8;
 }
 
-/* Focus styles for accessibility */
-*:focus-visible {
-  outline: 2px solid #22D3EE;
-  outline-offset: 4px;
-  border-radius: 4px;
+/* Progress Bar Glow */
+.progress-glow {
+  box-shadow: 0 0 15px 1px rgba(34, 211, 238, 0.5);
 }
 
-/* Backdrop blur support */
-@supports (backdrop-filter: blur(10px)) {
-  .backdrop-blur-sm {
-    backdrop-filter: blur(4px);
-  }
-  .backdrop-blur-md {
-    backdrop-filter: blur(12px);
-  }
+/* Section spacing */
+section {
+  position: relative;
+  isolation: isolate;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
 }
 
-/* Loading animation */
-@keyframes shimmer {
-  0% {
-    background-position: -1000px 0;
-  }
-  100% {
-    background-position: 1000px 0;
+@media (min-width: 1024px) {
+  section {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
   }
 }
 
-.shimmer {
-  animation: shimmer 2s linear infinite;
-  background: linear-gradient(
-    to right,
-    transparent 0%,
-    rgba(34, 211, 238, 0.1) 50%,
-    transparent 100%
-  );
-  background-size: 1000px 100%;
+/* Container */
+.container-custom {
+  width: 100%;
+  max-width: 80rem; /* 1280px */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .container-custom {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+/* Premium card */
+.premium-card {
+  background: rgba(17, 17, 17, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  transition: all 0.3s ease;
+}
+
+.premium-card:hover {
+  border-color: rgba(34, 211, 238, 0.2);
+  background: rgba(17, 17, 17, 0.6);
 }
 
 /* Gradient text */
@@ -125,152 +111,35 @@ p {
   background-clip: text;
 }
 
-/* Card hover effects */
-.card-hover {
+/* Quiet grid background */
+.quiet-grid {
+  background-image: 
+    radial-gradient(circle at 2px 2px, rgba(255, 255, 255, 0.05) 1px, transparent 0);
+  background-size: 40px 40px;
+}
+
+/* Smooth transitions */
+.transition-soft {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.card-hover:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(34, 211, 238, 0.15);
-}
-
-/* Glow effect */
-.glow-effect {
+/* Custom underline animation */
+.underline-hover {
   position: relative;
 }
 
-.glow-effect::before {
+.underline-hover::after {
   content: '';
   position: absolute;
-  inset: -2px;
-  border-radius: inherit;
-  padding: 2px;
-  background: linear-gradient(135deg, #22D3EE, #14B8A6);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.4s;
+  width: 0;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: #22D3EE;
+  transition: width 0.3s ease;
 }
 
-.glow-effect:hover::before {
-  opacity: 1;
+.underline-hover:hover::after {
+  width: 100%;
 }
 
-/* Section spacing */
-section {
-  position: relative;
-  isolation: isolate;
-}
-
-/* Improved link styles */
-a {
-  color: inherit;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-a:hover {
-  color: #22D3EE;
-}
-
-/* Button reset */
-button {
-  font-family: inherit;
-  cursor: pointer;
-  border: none;
-  background: none;
-}
-
-/* Improved form inputs */
-input,
-textarea {
-  font-family: inherit;
-}
-
-input:focus,
-textarea:focus {
-  outline: none;
-}
-
-/* Utility classes */
-.text-balance {
-  text-wrap: balance;
-}
-
-.container-padding {
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-}
-
-.section-shell {
-  padding: 7rem 1.5rem;
-}
-
-.premium-card {
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.012)),
-    rgba(17, 17, 17, 0.72);
-  border: 1px solid rgba(34, 211, 238, 0.16);
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.24);
-  backdrop-filter: blur(14px);
-}
-
-.quiet-grid {
-  background-image:
-    linear-gradient(rgba(34, 211, 238, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(34, 211, 238, 0.045) 1px, transparent 1px);
-  background-size: 72px 72px;
-  mask-image: linear-gradient(to bottom, transparent, black 18%, black 82%, transparent);
-}
-
-.section-divider {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: min(1120px, calc(100% - 3rem));
-  height: 1px;
-  transform: translateX(-50%);
-  background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.22), transparent);
-}
-
-.skip-link {
-  position: fixed;
-  left: 1rem;
-  top: 1rem;
-  z-index: 100;
-  transform: translateY(-140%);
-  border-radius: 0.5rem;
-  background: #22D3EE;
-  color: #050505;
-  padding: 0.75rem 1rem;
-  font-weight: 700;
-  transition: transform 0.2s ease;
-}
-
-.skip-link:focus {
-  transform: translateY(0);
-}
-
-@media (min-width: 768px) {
-  .container-padding {
-    padding-left: 3rem;
-    padding-right: 3rem;
-  }
-
-  .section-shell {
-    padding: 9rem 3rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .container-padding {
-    padding-left: 4rem;
-    padding-right: 4rem;
-  }
-
-  .section-shell {
-    padding: 10rem 4rem;
-  }
-}

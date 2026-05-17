@@ -1,168 +1,128 @@
-import { motion, useReducedMotion } from 'framer-motion'
+import { motion } from 'framer-motion'
+import { personalInfo } from '../data/portfolioData'
 import { useMerkleTree } from '../store/merkleStore'
 import { shortenHash } from '../utils/merkleTree'
-import { personalInfo } from '../data/portfolioData'
 
 export default function Hero() {
   const { root, isTreeValid } = useMerkleTree()
-  const shouldReduceMotion = useReducedMotion()
 
   const scrollToSection = (id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+    const element = document.getElementById(id)
+    if (element) {
+      window.scrollTo({
+        top: element.offsetTop - 80,
+        behavior: 'smooth'
+      })
+    }
   }
 
   return (
-    <section id="home" className="relative flex min-h-screen items-center overflow-hidden px-6 pb-16 pt-28 sm:pt-32 lg:px-10 lg:pb-24">
-      <div className="quiet-grid absolute inset-0 opacity-70" aria-hidden="true" />
-      <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-primary-teal/10 to-transparent" aria-hidden="true" />
-      <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-deep-black to-transparent" aria-hidden="true" />
+    <section id="home" className="relative min-h-screen flex flex-col justify-center overflow-hidden py-0">
+      <div className="quiet-grid absolute inset-0 opacity-40" aria-hidden="true" />
+      
+      {/* Decorative Blobs */}
+      <div className="absolute top-1/4 -left-20 w-72 h-72 bg-primary-teal/10 rounded-full blur-[120px]" />
+      <div className="absolute bottom-1/4 -right-20 w-72 h-72 bg-primary-cyan/10 rounded-full blur-[120px]" />
 
-      <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-14 lg:grid-cols-[1.05fr_0.95fr]">
-        <div className="text-center lg:text-left">
+      <div className="container-custom relative z-10 pt-20">
+        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+          
+          {/* Profile Photo - Left on Desktop */}
           <motion.div
-            initial={{ opacity: 0, y: -14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65 }}
-            className="mb-7 inline-flex items-center gap-3 rounded-full border border-primary-teal/25 bg-card-dark/70 px-4 py-2 text-xs font-semibold text-primary-teal shadow-lg shadow-black/20 backdrop-blur-md"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="relative"
           >
-            <span className="h-2 w-2 rounded-full bg-valid-green" />
-            Available for full-stack and Web3 work
-          </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, delay: 0.1 }}
-            className="text-5xl font-bold leading-[1.04] text-text-primary sm:text-6xl lg:text-7xl xl:text-8xl"
-          >
-            {personalInfo.name}
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, delay: 0.18 }}
-            className="mt-6 text-xl font-medium text-primary-teal sm:text-2xl"
-          >
-            {personalInfo.title}
-          </motion.p>
-
-          <motion.p
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, delay: 0.26 }}
-            className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-text-secondary sm:text-xl lg:mx-0"
-          >
-            {personalInfo.tagline} I design calm interfaces over reliable systems, with backend discipline and blockchain-grade verification.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, delay: 0.34 }}
-            className="mt-10 flex flex-col gap-4 sm:flex-row sm:justify-center lg:justify-start"
-          >
-            <button
-              onClick={() => scrollToSection('projects')}
-              className="inline-flex items-center justify-center gap-3 rounded-xl bg-primary-teal px-7 py-4 text-base font-bold text-deep-black shadow-xl shadow-primary-teal/20 transition-all hover:-translate-y-0.5 hover:bg-primary-cyan hover:shadow-primary-teal/25"
-              aria-label="View featured projects"
-            >
-              View Projects
-              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </button>
-            <button
-              onClick={() => scrollToSection('merkle-tree')}
-              className="inline-flex items-center justify-center gap-3 rounded-xl border border-primary-teal/30 bg-card-dark/70 px-7 py-4 text-base font-bold text-primary-teal backdrop-blur-md transition-all hover:-translate-y-0.5 hover:border-primary-teal hover:bg-primary-teal/10"
-              aria-label="Explore the Merkle Tree"
-            >
-              Explore Tree
-              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M7 12h10M10 18h4" />
-              </svg>
-            </button>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, delay: 0.44 }}
-            className="mt-10 grid gap-3 sm:grid-cols-3"
-          >
-            {[
-              ['Focus', 'Backend systems'],
-              ['Web3', 'Smart contracts'],
-              ['Base', personalInfo.location],
-            ].map(([label, value]) => (
-              <div key={label} className="rounded-xl border border-white/10 bg-white/[0.025] px-4 py-3">
-                <div className="text-xs font-semibold uppercase tracking-[0.16em] text-text-secondary">{label}</div>
-                <div className="mt-1 text-sm font-semibold text-text-primary">{value}</div>
-              </div>
-            ))}
-          </motion.div>
-        </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 28, scale: 0.98 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.18 }}
-          className="relative mx-auto w-full max-w-xl"
-        >
-          <div className="premium-card overflow-hidden rounded-2xl p-4 sm:p-5">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-xl border border-white/10 bg-card-darker">
-              <img
-                src={personalInfo.photo}
-                alt={`${personalInfo.name} portrait`}
-                className="h-full w-full object-cover"
-                loading="eager"
-                decoding="async"
-              />
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-deep-black via-deep-black/60 to-transparent p-5 pt-20">
-                <div className="rounded-xl border border-primary-teal/20 bg-deep-black/70 p-4 backdrop-blur-md">
-                  <div className="mb-2 flex items-center justify-between gap-3">
-                    <span className="text-xs font-semibold uppercase tracking-[0.16em] text-text-secondary">
-                      Merkle root
-                    </span>
-                    <span className={`h-2.5 w-2.5 rounded-full ${isTreeValid ? 'bg-valid-green' : 'bg-invalid-red'}`} />
-                  </div>
-                  <div className={`break-all font-mono text-xl font-bold ${isTreeValid ? 'text-primary-teal' : 'text-invalid-red'}`}>
-                    {root ? shortenHash(root.hash, 10) : 'Building tree...'}
-                  </div>
-                  <p className="mt-2 text-sm text-text-secondary">
-                    {isTreeValid ? 'Valid, traceable project graph' : 'Integrity changed, re-mine to restore'}
-                  </p>
-                </div>
+            <div className="relative w-40 h-40 lg:w-48 lg:h-48 rounded-full p-[2px] bg-gradient-to-tr from-primary-teal to-primary-cyan shadow-2xl shadow-primary-teal/20">
+              <div className="w-full h-full rounded-full overflow-hidden bg-card-darker">
+                <img
+                  src={personalInfo.photo}
+                  alt={personalInfo.name}
+                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                />
               </div>
             </div>
+            {/* Status Indicator */}
+            <div className="absolute bottom-2 right-2 w-5 h-5 bg-valid-green rounded-full border-4 border-deep-black animate-pulse" />
+          </motion.div>
+
+          {/* Text Content */}
+          <div className="flex-1 text-center lg:text-left">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="text-primary-teal font-mono text-sm tracking-widest uppercase mb-4">
+                Available for opportunities
+              </h2>
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold text-text-primary tracking-tight mb-6">
+                I'm <span className="gradient-text">{personalInfo.name.split(' ')[0]}</span>
+              </h1>
+              <p className="text-xl md:text-2xl text-text-secondary max-w-2xl mx-auto lg:mx-0 leading-relaxed mb-10">
+                {personalInfo.tagline} Focused on <span className="text-text-primary">Reliability</span> and <span className="text-text-primary">Performance</span>.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="flex flex-wrap justify-center lg:justify-start gap-5"
+            >
+              <button
+                onClick={() => scrollToSection('projects')}
+                className="px-8 py-4 bg-primary-teal text-deep-black font-bold rounded-full hover:scale-105 transition-transform shadow-lg shadow-primary-teal/20"
+              >
+                View My Work
+              </button>
+              <button
+                onClick={() => scrollToSection('merkle-tree')}
+                className="px-8 py-4 border border-white/10 hover:border-primary-teal/50 hover:bg-primary-teal/5 transition-all text-text-primary font-bold rounded-full"
+              >
+                Explore Tree
+              </button>
+            </motion.div>
+
+            {/* Stats/Quick Info */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="mt-12 flex items-center justify-center lg:justify-start gap-8"
+            >
+              <div className="flex flex-col">
+                <span className="text-2xl font-bold text-text-primary">2+</span>
+                <span className="text-xs text-text-secondary uppercase tracking-wider">Years Exp</span>
+              </div>
+              <div className="h-8 w-[1px] bg-white/10" />
+              <div className="flex flex-col">
+                <span className="text-2xl font-bold text-text-primary">20+</span>
+                <span className="text-xs text-text-secondary uppercase tracking-wider">Projects</span>
+              </div>
+              <div className="h-8 w-[1px] bg-white/10" />
+              <div className="premium-card rounded-lg px-4 py-2 flex items-center gap-3">
+                 <div className={`w-2 h-2 rounded-full ${isTreeValid ? 'bg-valid-green' : 'bg-invalid-red'}`} />
+                 <span className="font-mono text-xs text-text-secondary">
+                   ROOT: {root ? shortenHash(root.hash, 6) : '...'}
+                 </span>
+              </div>
+            </motion.div>
           </div>
-          <div className="absolute -bottom-5 -left-5 hidden rounded-xl border border-primary-teal/20 bg-card-dark/90 px-5 py-4 shadow-2xl shadow-black/30 backdrop-blur-md sm:block">
-            <div className="text-3xl font-bold text-primary-teal">20+</div>
-            <div className="text-xs font-semibold uppercase tracking-[0.16em] text-text-secondary">Projects</div>
-          </div>
-        </motion.div>
+        </div>
       </div>
 
-      <motion.button
-        type="button"
-        onClick={() => scrollToSection('about')}
+      {/* Scroll Indicator */}
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.7, delay: 0.85 }}
-        className="absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-3 text-text-secondary/70 transition-colors hover:text-primary-teal md:flex"
-        aria-label="Scroll to explore"
+        transition={{ delay: 1, duration: 1 }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
-        <span className="text-xs font-mono uppercase tracking-[0.18em]">Scroll to explore</span>
-        <motion.span
-          animate={shouldReduceMotion ? {} : { y: [0, 7, 0] }}
-          transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
-          className="grid h-10 w-7 place-items-center rounded-full border border-white/20"
-        >
-          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-          </svg>
-        </motion.span>
-      </motion.button>
+        <span className="text-[10px] uppercase tracking-[0.3em] text-text-secondary">Explore</span>
+        <div className="w-[1px] h-12 bg-gradient-to-b from-primary-teal to-transparent" />
+      </motion.div>
     </section>
   )
 }

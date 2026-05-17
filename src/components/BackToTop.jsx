@@ -5,8 +5,7 @@ export default function BackToTop() {
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
-    const onScroll = () => setIsVisible(window.scrollY > 700)
-    onScroll()
+    const onScroll = () => setIsVisible(window.scrollY > 1000)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
@@ -15,18 +14,14 @@ export default function BackToTop() {
     <AnimatePresence>
       {isVisible && (
         <motion.button
-          type="button"
-          initial={{ opacity: 0, y: 16, scale: 0.94 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 16, scale: 0.94 }}
-          whileHover={{ y: -2 }}
-          onClick={() => document.getElementById('home')?.scrollIntoView({ behavior: 'smooth' })}
-          className="fixed bottom-5 right-5 z-50 grid h-12 w-12 place-items-center rounded-xl border border-primary-teal/30 bg-card-dark/90 text-primary-teal shadow-2xl shadow-black/30 backdrop-blur-md transition-colors hover:border-primary-teal hover:bg-primary-teal hover:text-deep-black sm:bottom-8 sm:right-8"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.8 }}
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="fixed bottom-10 right-10 z-[60] w-12 h-12 rounded-full bg-text-primary text-deep-black shadow-2xl flex items-center justify-center transition-transform hover:scale-110 active:scale-95"
           aria-label="Back to top"
         >
-          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
-          </svg>
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7 7 7M12 3v18" /></svg>
         </motion.button>
       )}
     </AnimatePresence>
