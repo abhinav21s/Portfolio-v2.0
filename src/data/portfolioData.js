@@ -25,23 +25,58 @@ export const personalInfo = {
 }
 
 export const skills = {
-  backend: {
-    title: "Backend Engineering",
-    items: ["Node.js", "Python", "Go", "PostgreSQL", "MongoDB", "Redis", "REST APIs", "GraphQL", "Microservices", "Docker", "Kubernetes"]
+  frontend: {
+    title: "Frontend",
+    items: [
+      "React",
+      "JavaScript",
+      "Tailwind CSS",
+      "HTML5 & CSS3",
+      "Responsive Design"
+    ]
   },
+
+  backend: {
+    title: "Backend",
+    items: [
+      "Node.js",
+      "Express.js",
+      "PostgreSQL",
+      "MongoDB",
+      "MySQL",
+      "REST APIs",
+      "JWT Authentication",
+      "Supabase",
+      "Postman",
+      "Caching & Indexing"
+    ]
+  },
+
   blockchain: {
     title: "Blockchain & Web3",
-    items: ["Solidity", "Ethereum", "Smart Contracts", "Web3.js", "Hardhat", "Truffle", "IPFS", "Merkle Trees", "Consensus Algorithms", "DeFi Protocols"]
+    items: [
+      "Smart Contracts",
+      "Solidity",
+      "Solana Concepts",
+      "Token Creation",
+      "Web3.js",
+      "Merkle Trees"
+    ],
+    note: "Actively learning and building projects"
   },
-  frontend: {
-    title: "Frontend Development",
-    items: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "State Management", "Responsive Design"]
-  },
+
   tools: {
     title: "Tools & Others",
-    items: ["Git", "GitHub Actions", "AWS", "Linux", "Nginx", "CI/CD", "Testing (Jest, Mocha)", "Agile/Scrum"]
+    items: [
+      "Git & GitHub",
+      "Postman",
+      "Docker",
+      "Vercel, Render, Hostinger",
+      "Linux (WSL)",
+      "VS Code"
+    ]
   }
-}
+};
 
 export const projects = [
   {
