@@ -36,29 +36,29 @@ function TreeNode({ node, level, isHighlighted, onSelect, showTamperDemo, onPosi
         whileHover={{ y: -5 }}
         onClick={() => (isLeaf || showTamperDemo) && onSelect(node.id)}
         className={`
-          relative rounded-xl border transition-all duration-300 p-4 text-center
-          ${isLeaf ? 'min-w-[180px] cursor-pointer' : 'min-w-[150px]'}
+          relative rounded-2xl border transition-all duration-500 p-5 text-center
+          ${isLeaf ? 'min-w-[200px] cursor-pointer' : 'min-w-[160px]'}
           ${isHighlighted 
-            ? isInvalid ? 'bg-invalid-red/10 border-invalid-red shadow-lg shadow-invalid-red/20' : 'bg-primary-teal/10 border-primary-teal shadow-lg shadow-primary-teal/20'
-            : isInvalid ? 'bg-card-dark/60 border-invalid-red/50' : 'bg-card-dark/40 border-white/10 hover:border-primary-teal/30'
+            ? isInvalid ? 'bg-invalid-red/[0.08] border-invalid-red shadow-[0_0_20px_rgba(239,68,68,0.15)]' : 'bg-primary-teal/[0.08] border-primary-teal shadow-[0_0_20px_rgba(34,211,238,0.15)]'
+            : isInvalid ? 'bg-white/[0.02] border-invalid-red/40' : 'bg-white/[0.02] border-white/5 hover:border-white/20'
           }
-          ${isRoot ? 'border-primary-teal/50 bg-primary-teal/5' : ''}
+          ${isRoot ? 'border-primary-teal/40 bg-primary-teal/[0.04]' : ''}
         `}
       >
-        <div className="text-[10px] uppercase tracking-widest text-text-secondary font-mono mb-1">
-          {isRoot ? 'Root' : isLeaf ? 'Leaf' : `L${level}`}
+        <div className="text-[9px] uppercase tracking-[0.2em] text-text-secondary font-mono mb-2">
+          {isRoot ? 'Root Hash' : isLeaf ? 'Leaf Node' : `Branch L${level}`}
         </div>
         {isLeaf && (
-          <div className="text-xs font-bold text-text-primary mb-2 truncate max-w-[140px]">
+          <div className="text-sm font-display font-bold text-text-primary mb-2 truncate max-w-[160px]">
             {node.data.title}
           </div>
         )}
-        <div className={`text-[11px] font-mono font-bold ${isInvalid ? 'text-invalid-red' : 'text-primary-teal'}`}>
-          {shortenHash(node.hash, 8)}
+        <div className={`text-[11px] font-mono font-medium tracking-tight ${isInvalid ? 'text-invalid-red' : 'text-primary-teal/90'}`}>
+          {shortenHash(node.hash, 12)}
         </div>
 
-        {/* Status Dot */}
-        <div className={`absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full border-2 border-deep-black ${isInvalid ? 'bg-invalid-red' : 'bg-valid-green'}`} />
+        {/* Verification Status */}
+        <div className={`absolute -top-1.5 -right-1.5 w-3 h-3 rounded-full border-2 border-deep-black ${isInvalid ? 'bg-invalid-red shadow-[0_0_8px_rgba(239,68,68,0.4)]' : 'bg-valid-green shadow-[0_0_8px_rgba(34,211,238,0.4)]'}`} />
       </motion.div>
     </motion.div>
   )

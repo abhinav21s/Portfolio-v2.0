@@ -18,11 +18,14 @@ const itemVariants = {
 
 export default function Skills() {
   return (
-    <section id="skills" className="relative">
+    <section id="skills" className="relative scroll-mt-24">
       <div className="container-custom">
-        <div className="mb-16">
-          <h2 className="text-sm font-mono text-primary-teal uppercase tracking-[0.3em] mb-4">My Expertise</h2>
-          <h3 className="text-4xl md:text-5xl font-display font-bold text-text-primary">Skills & Tools</h3>
+        <div className="max-w-4xl mb-16">
+          <h2 className="text-sm font-mono text-primary-teal uppercase tracking-[0.3em] mb-6">Expertise</h2>
+          <h3 className="text-4xl md:text-6xl font-display font-bold text-text-primary mb-8">Technical Proficiency</h3>
+          <p className="text-lg text-text-secondary leading-relaxed max-w-2xl">
+            A comprehensive stack focused on building secure, scalable, and verifiable applications from the backend out.
+          </p>
         </div>
 
         <motion.div
@@ -30,34 +33,37 @@ export default function Skills() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16"
         >
           {Object.entries(skills).map(([key, category]) => (
             <motion.div
               key={key}
               variants={itemVariants}
-              className="premium-card rounded-2xl p-8 group"
+              className="group"
             >
-              <h4 className="text-lg font-display font-bold text-text-primary mb-6 flex items-center gap-3">
-                <span className="w-8 h-8 rounded-lg bg-primary-teal/10 flex items-center justify-center text-primary-teal text-sm">
-                  {key[0].toUpperCase()}
-                </span>
-                {category.title}
-              </h4>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex items-center gap-4 mb-8">
+                <div className="h-[1px] w-8 bg-primary-teal/50" />
+                <h4 className="text-xl font-display font-bold text-text-primary uppercase tracking-wider">
+                  {category.title}
+                </h4>
+              </div>
+              <div className="flex flex-wrap gap-3">
                 {category.items.map((skill) => (
                   <span
                     key={skill}
-                    className="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-text-secondary transition-all group-hover:border-primary-teal/30 group-hover:text-text-primary"
+                    className="px-4 py-2 rounded-xl bg-white/[0.03] border border-white/5 text-sm font-medium text-text-secondary transition-all hover:bg-white/[0.08] hover:border-primary-teal/30 hover:text-text-primary hover:scale-[1.02]"
                   >
                     {skill}
                   </span>
                 ))}
               </div>
               {category.note && (
-                <p className="mt-6 text-xs italic text-primary-teal/70">
-                  * {category.note}
-                </p>
+                <div className="mt-8 flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary-teal/40" />
+                  <p className="text-xs font-mono text-text-secondary/60 italic uppercase tracking-wider">
+                    {category.note}
+                  </p>
+                </div>
               )}
             </motion.div>
           ))}

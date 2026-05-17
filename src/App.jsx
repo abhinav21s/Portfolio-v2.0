@@ -23,23 +23,27 @@ function App() {
         </a>
         <ScrollProgress />
         <Navigation />
-        <Hero />
-        <Suspense
-          fallback={
-            <div className="grid min-h-[40vh] place-items-center bg-deep-black px-6 text-center text-sm font-mono text-text-secondary">
-              Loading portfolio sections...
+        <main>
+          <Hero />
+          <Suspense
+            fallback={
+              <div className="grid min-h-[40vh] place-items-center bg-deep-black px-6 text-center text-sm font-mono text-text-secondary">
+                Loading portfolio sections...
+              </div>
+            }
+          >
+            <div className="space-y-24 md:space-y-32 pb-24 md:pb-32">
+              <About />
+              <Skills />
+              <Projects />
+              <MerkleTreeSection />
+              <Experience />
+              <BeyondTheChain />
+              <Contact />
             </div>
-          }
-        >
-          <About />
-          <Skills />
-          <Projects />
-          <MerkleTreeSection />
-          <Experience />
-          <BeyondTheChain />
-          <Contact />
-          <Footer />
-        </Suspense>
+          </Suspense>
+        </main>
+        <Footer />
         <BackToTop />
       </div>
     </MerkleTreeProvider>

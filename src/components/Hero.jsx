@@ -17,96 +17,95 @@ export default function Hero() {
   }
 
   return (
-    <section id="home" className="relative min-h-screen flex flex-col justify-center overflow-hidden py-0">
-      <div className="quiet-grid absolute inset-0 opacity-40" aria-hidden="true" />
+    <section id="home" className="relative min-h-screen flex flex-col justify-center overflow-hidden py-20 lg:py-0">
+      <div className="quiet-grid absolute inset-0 opacity-20" aria-hidden="true" />
       
       {/* Decorative Blobs */}
-      <div className="absolute top-1/4 -left-20 w-72 h-72 bg-primary-teal/10 rounded-full blur-[120px]" />
-      <div className="absolute bottom-1/4 -right-20 w-72 h-72 bg-primary-cyan/10 rounded-full blur-[120px]" />
+      <div className="absolute top-1/4 -left-20 w-96 h-96 bg-primary-teal/5 rounded-full blur-[120px]" />
+      <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-primary-cyan/5 rounded-full blur-[120px]" />
 
-      <div className="container-custom relative z-10 pt-20">
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+      <div className="container-custom relative z-10 pt-12 md:pt-20">
+        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-24">
           
-          {/* Profile Photo - Left on Desktop */}
+          {/* Profile Photo */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="relative"
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="relative order-1 lg:order-none"
           >
-            <div className="relative w-40 h-40 lg:w-48 lg:h-48 rounded-full p-[2px] bg-gradient-to-tr from-primary-teal to-primary-cyan shadow-2xl shadow-primary-teal/20">
+            <div className="relative w-[140px] h-[140px] md:w-[160px] md:h-[160px] rounded-full p-[1px] bg-gradient-to-tr from-white/20 to-white/5 shadow-2xl">
               <div className="w-full h-full rounded-full overflow-hidden bg-card-darker">
                 <img
                   src={personalInfo.photo}
                   alt={personalInfo.name}
-                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
                 />
               </div>
             </div>
             {/* Status Indicator */}
-            <div className="absolute bottom-2 right-2 w-5 h-5 bg-valid-green rounded-full border-4 border-deep-black animate-pulse" />
+            <div className="absolute bottom-3 right-3 w-4 h-4 bg-valid-green rounded-full border-2 border-deep-black shadow-[0_0_15px_rgba(34,211,238,0.4)]" />
           </motion.div>
 
           {/* Text Content */}
           <div className="flex-1 text-center lg:text-left">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             >
-              <h2 className="text-primary-teal font-mono text-sm tracking-widest uppercase mb-4">
-                Available for opportunities
-              </h2>
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold text-text-primary tracking-tight mb-6">
-                I'm <span className="gradient-text">{personalInfo.name.split(' ')[0]}</span>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-8">
+                <span className="w-2 h-2 rounded-full bg-primary-teal animate-pulse" />
+                <span className="text-[10px] font-mono text-text-secondary uppercase tracking-[0.2em]">Available for Opportunities</span>
+              </div>
+              
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold text-text-primary tracking-tight mb-8">
+                Building <span className="text-primary-teal italic">verifiable</span> systems.
               </h1>
-              <p className="text-xl md:text-2xl text-text-secondary max-w-2xl mx-auto lg:mx-0 leading-relaxed mb-10">
-                {personalInfo.tagline} Focused on <span className="text-text-primary">Reliability</span> and <span className="text-text-primary">Performance</span>.
+              
+              <p className="text-xl md:text-2xl text-text-secondary max-w-2xl mx-auto lg:mx-0 leading-relaxed mb-12 font-light">
+                Hi, I'm <span className="text-text-primary font-medium">{personalInfo.name}</span>. {personalInfo.tagline}
               </p>
             </motion.div>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="flex flex-wrap justify-center lg:justify-start gap-5"
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-wrap justify-center lg:justify-start gap-6"
             >
               <button
                 onClick={() => scrollToSection('projects')}
-                className="px-8 py-4 bg-primary-teal text-deep-black font-bold rounded-full hover:scale-105 transition-transform shadow-lg shadow-primary-teal/20"
+                className="group relative px-8 py-4 bg-text-primary text-deep-black font-bold rounded-full overflow-hidden transition-all hover:scale-[1.02] active:scale-95"
               >
-                View My Work
+                <span className="relative z-10">View My Work</span>
+                <div className="absolute inset-0 bg-primary-teal translate-y-full transition-transform group-hover:translate-y-0" />
               </button>
               <button
                 onClick={() => scrollToSection('merkle-tree')}
-                className="px-8 py-4 border border-white/10 hover:border-primary-teal/50 hover:bg-primary-teal/5 transition-all text-text-primary font-bold rounded-full"
+                className="px-8 py-4 border border-white/10 hover:border-white/20 hover:bg-white/5 transition-all text-text-primary font-bold rounded-full"
               >
                 Explore Tree
               </button>
             </motion.div>
 
-            {/* Stats/Quick Info */}
+            {/* Root Hash Display */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="mt-12 flex items-center justify-center lg:justify-start gap-8"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 0.6 }}
+              className="mt-16 flex flex-wrap items-center justify-center lg:justify-start gap-8 border-t border-white/5 pt-8"
             >
-              <div className="flex flex-col">
-                <span className="text-2xl font-bold text-text-primary">2+</span>
-                <span className="text-xs text-text-secondary uppercase tracking-wider">Years Exp</span>
+              <div className="flex flex-col gap-1">
+                <span className="text-sm font-mono text-primary-teal">{root ? shortenHash(root.hash, 12) : '...'}</span>
+                <span className="text-[10px] text-text-secondary uppercase tracking-widest">Merkle Root Status</span>
               </div>
-              <div className="h-8 w-[1px] bg-white/10" />
-              <div className="flex flex-col">
-                <span className="text-2xl font-bold text-text-primary">20+</span>
-                <span className="text-xs text-text-secondary uppercase tracking-wider">Projects</span>
-              </div>
-              <div className="h-8 w-[1px] bg-white/10" />
-              <div className="premium-card rounded-lg px-4 py-2 flex items-center gap-3">
-                 <div className={`w-2 h-2 rounded-full ${isTreeValid ? 'bg-valid-green' : 'bg-invalid-red'}`} />
-                 <span className="font-mono text-xs text-text-secondary">
-                   ROOT: {root ? shortenHash(root.hash, 6) : '...'}
-                 </span>
+              <div className="h-8 w-[1px] bg-white/5" />
+              <div className="flex items-center gap-3">
+                <div className={`w-2 h-2 rounded-full ${isTreeValid ? 'bg-valid-green' : 'bg-invalid-red'} shadow-[0_0_10px_rgba(34,211,238,0.2)]`} />
+                <span className="text-xs font-mono text-text-secondary uppercase tracking-wider">
+                  {isTreeValid ? 'Verified Integrity' : 'Syncing...'}
+                </span>
               </div>
             </motion.div>
           </div>

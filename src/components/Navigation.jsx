@@ -109,7 +109,7 @@ export default function Navigation() {
           })}
         </div>
 
-        <div className="hidden items-center gap-4 lg:flex">
+        <div className="hidden items-center gap-6 lg:flex">
           <a
             href={personalInfo.social.github}
             target="_blank"
@@ -120,9 +120,12 @@ export default function Navigation() {
           </a>
           <button
             onClick={() => handleNavClick('contact')}
-            className="rounded-full bg-text-primary px-5 py-2 text-sm font-bold text-deep-black transition-transform hover:scale-105 active:scale-95"
+            className="group relative overflow-hidden rounded-full bg-text-primary px-6 py-2.5 text-sm font-bold text-deep-black transition-all hover:pr-8 active:scale-95"
           >
-            Hire Me
+            <span className="relative z-10 transition-all group-hover:translate-x-[-2px]">Let's Work Together</span>
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 opacity-0 transition-all group-hover:opacity-100 group-hover:translate-x-0 translate-x-4">
+              →
+            </span>
           </button>
         </div>
 

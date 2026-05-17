@@ -3,65 +3,72 @@ import { experience, leadership } from '../data/portfolioData'
 
 export default function Experience() {
   return (
-    <section id="experience" className="relative">
+    <section id="experience" className="relative scroll-mt-24">
       <div className="container-custom">
-        <div className="mb-16">
-          <h2 className="text-sm font-mono text-primary-teal uppercase tracking-[0.3em] mb-4">The Journey</h2>
-          <h3 className="text-4xl md:text-5xl font-display font-bold text-text-primary">Experience & Leadership</h3>
+        <div className="max-w-4xl mb-20">
+          <h2 className="text-sm font-mono text-primary-teal uppercase tracking-[0.3em] mb-6">The Journey</h2>
+          <h3 className="text-4xl md:text-6xl font-display font-bold text-text-primary mb-8">Career Path</h3>
+          <p className="text-lg text-text-secondary leading-relaxed max-w-2xl font-light">
+            A track record of building reliable systems and leading teams towards technical excellence.
+          </p>
         </div>
 
-        <div className="max-w-4xl mx-auto space-y-20">
+        <div className="max-w-5xl mx-auto space-y-24">
           
           {/* Work */}
-          <div className="space-y-12">
-            <h4 className="text-xl font-display font-bold text-text-primary flex items-center gap-3">
-               <span className="w-8 h-8 rounded-lg bg-primary-teal/10 flex items-center justify-center text-primary-teal">
-                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-               </span>
-               Professional
-            </h4>
+          <div className="space-y-16">
+            <div className="flex items-center gap-6">
+               <div className="h-[1px] w-12 bg-primary-teal/50" />
+               <h4 className="text-2xl font-display font-bold text-text-primary uppercase tracking-wider">
+                 Professional
+               </h4>
+            </div>
             
-            <div className="space-y-8">
+            <div className="space-y-12">
               {experience.map((exp, i) => (
                 <motion.div
                   key={exp.id}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
-                  className="premium-card p-8 rounded-3xl relative"
+                  className="relative group"
                 >
-                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-                    <div>
-                      <h5 className="text-xl font-display font-bold text-text-primary">{exp.title}</h5>
-                      <p className="text-primary-teal font-medium">{exp.company}</p>
+                  <div className="p-8 md:p-12 rounded-[2rem] bg-white/[0.02] border border-white/5 group-hover:border-primary-teal/20 transition-all duration-500">
+                    <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-8">
+                      <div>
+                        <h5 className="text-2xl font-display font-bold text-text-primary mb-2">{exp.title}</h5>
+                        <p className="text-lg text-primary-teal font-medium">{exp.company}</p>
+                      </div>
+                      <span className="text-xs font-mono text-text-secondary uppercase tracking-[0.2em] bg-white/5 px-4 py-2 rounded-full border border-white/5">
+                        {exp.period}
+                      </span>
                     </div>
-                    <span className="text-xs font-mono text-text-secondary uppercase tracking-widest">{exp.period}</span>
+                    <p className="text-lg text-text-secondary leading-relaxed mb-10 font-light">{exp.description}</p>
+                    <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4">
+                      {exp.achievements.map((ach, idx) => (
+                        <li key={idx} className="flex items-start gap-4 text-base text-text-secondary group/item">
+                          <span className="mt-2.5 w-1.5 h-1.5 rounded-full bg-primary-teal/40 group-hover/item:bg-primary-teal transition-colors flex-shrink-0" />
+                          <span className="group-hover/item:text-text-primary transition-colors font-light">{ach}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                  <p className="text-text-secondary leading-relaxed mb-6">{exp.description}</p>
-                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {exp.achievements.map((ach, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-sm text-text-secondary">
-                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary-teal flex-shrink-0" />
-                        {ach}
-                      </li>
-                    ))}
-                  </ul>
                 </motion.div>
               ))}
             </div>
           </div>
 
           {/* Leadership */}
-          <div className="space-y-12">
-             <h4 className="text-xl font-display font-bold text-text-primary flex items-center gap-3">
-               <span className="w-8 h-8 rounded-lg bg-primary-cyan/10 flex items-center justify-center text-primary-cyan">
-                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
-               </span>
-               Leadership
-            </h4>
+          <div className="space-y-16">
+             <div className="flex items-center gap-6">
+                <div className="h-[1px] w-12 bg-primary-cyan/50" />
+                <h4 className="text-2xl font-display font-bold text-text-primary uppercase tracking-wider">
+                  Leadership & Impact
+                </h4>
+             </div>
 
-             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {leadership.map((lead, i) => (
                 <motion.div
                   key={lead.id}
@@ -69,14 +76,14 @@ export default function Experience() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
-                  className="premium-card p-6 rounded-3xl"
+                  className="p-8 rounded-[2rem] bg-white/[0.02] border border-white/5 hover:border-primary-cyan/20 transition-all duration-500"
                 >
-                  <div className="mb-4">
-                    <h5 className="text-lg font-display font-bold text-text-primary">{lead.title}</h5>
-                    <p className="text-primary-cyan text-sm">{lead.organization}</p>
+                  <div className="mb-6">
+                    <h5 className="text-xl font-display font-bold text-text-primary mb-2">{lead.title}</h5>
+                    <p className="text-primary-cyan text-sm font-medium">{lead.organization}</p>
                   </div>
-                  <p className="text-sm text-text-secondary leading-relaxed mb-4">{lead.description}</p>
-                  <span className="text-[10px] font-mono text-text-secondary uppercase tracking-widest">{lead.period}</span>
+                  <p className="text-base text-text-secondary leading-relaxed mb-6 font-light">{lead.description}</p>
+                  <span className="text-[10px] font-mono text-text-secondary uppercase tracking-[0.2em]">{lead.period}</span>
                 </motion.div>
               ))}
             </div>
