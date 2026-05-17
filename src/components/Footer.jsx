@@ -8,7 +8,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="py-12 px-6 bg-card-dark border-t border-primary-teal/20">
+    <footer className="border-t border-primary-teal/20 bg-card-dark/70 px-6 py-12">
       <div className="max-w-6xl mx-auto">
         <div className="grid md:grid-cols-3 gap-8 mb-8">
           {/* Brand */}
@@ -38,7 +38,7 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#merkle-tree" className="text-text-secondary hover:text-primary-teal transition-colors duration-200 text-sm">
+                <a href="#projects" className="text-text-secondary hover:text-primary-teal transition-colors duration-200 text-sm">
                   Projects
                 </a>
               </li>
@@ -60,7 +60,7 @@ export default function Footer() {
             <h4 className="text-sm font-semibold text-primary-teal uppercase tracking-wider mb-4">
               Current Merkle Root
             </h4>
-            <div className="p-4 bg-card-darker border border-primary-teal/30 rounded-lg">
+            <div className="rounded-xl border border-primary-teal/20 bg-card-darker/80 p-4">
               <div className="text-xs font-mono text-primary-teal break-all">
                 {root ? shortenHash(root.hash, 8) : 'Building...'}
               </div>

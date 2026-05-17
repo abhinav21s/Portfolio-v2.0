@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
 import { experience, leadership } from '../data/portfolioData'
+import SectionHeading from './SectionHeading'
 
 function ExperienceCard({ item, index, isInView }) {
   return (
@@ -9,16 +10,16 @@ function ExperienceCard({ item, index, isInView }) {
       initial={{ opacity: 0, x: -30 }}
       animate={isInView ? { opacity: 1, x: 0 } : {}}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="relative pl-8 pb-12 last:pb-0"
+      className="relative pb-12 pl-8 last:pb-0"
     >
       {/* Timeline line */}
-      <div className="absolute left-0 top-0 bottom-0 w-px bg-primary-teal/30" />
+      <div className="absolute bottom-0 left-0 top-0 w-px bg-primary-teal/25" />
       
       {/* Timeline dot */}
-      <div className="absolute left-0 top-2 w-4 h-4 -ml-[7px] bg-primary-teal rounded-full border-4 border-deep-black" />
+      <div className="absolute left-0 top-2 -ml-[7px] h-4 w-4 rounded-full border-4 border-deep-black bg-primary-teal shadow-lg shadow-primary-teal/30" />
 
       {/* Content */}
-      <div className="bg-card-dark border border-primary-teal/20 rounded-lg p-6 hover:border-primary-teal/40 transition-all duration-300 hover:shadow-lg hover:shadow-primary-teal/10">
+      <div className="premium-card rounded-xl p-6 transition-all duration-300 hover:-translate-y-1 hover:border-primary-teal/40">
         <div className="flex flex-wrap items-start justify-between gap-4 mb-4">
           <div>
             <h3 className="text-xl font-bold text-text-primary mb-1">
@@ -59,22 +60,15 @@ export default function Experience() {
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
   return (
-    <section id="experience" className="py-32 px-6 bg-gradient-to-b from-card-dark/20 to-deep-black" ref={ref}>
+    <section id="experience" className="section-shell bg-gradient-to-b from-card-dark/20 to-deep-black" ref={ref}>
+      <div className="section-divider" />
       <div className="max-w-4xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Experience & Leadership
-          </h2>
-          <p className="text-text-secondary text-lg max-w-2xl mx-auto">
-            Building systems and leading teams with the discipline learned from athletics.
-          </p>
-          <div className="w-20 h-1 bg-primary-teal mx-auto mt-6" />
-        </motion.div>
+        <SectionHeading
+          eyebrow="Experience"
+          title="Experience & Leadership"
+          description="Building systems, learning quickly, and leading with the consistency developed through athletics."
+          isInView={isInView}
+        />
 
         {/* Professional Experience */}
         <div className="mb-16">

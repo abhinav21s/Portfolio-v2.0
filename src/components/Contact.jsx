@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
 import { personalInfo } from '../data/portfolioData'
+import SectionHeading from './SectionHeading'
 
 export default function Contact() {
   const ref = useRef(null)
@@ -36,24 +37,17 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="py-32 px-6 bg-gradient-to-b from-deep-black to-card-dark/20" ref={ref}>
+    <section id="contact" className="section-shell bg-gradient-to-b from-deep-black to-card-dark/20" ref={ref}>
+      <div className="section-divider" />
       <div className="max-w-5xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Get in Touch
-          </h2>
-          <p className="text-text-secondary text-lg max-w-2xl mx-auto">
-            Interested in collaborating or discussing blockchain, backend systems, or building something great together? Let's connect.
-          </p>
-          <div className="w-20 h-1 bg-primary-teal mx-auto mt-6" />
-        </motion.div>
+        <SectionHeading
+          eyebrow="Contact"
+          title="Get in Touch"
+          description="Interested in collaborating on backend systems, blockchain products, or polished full-stack applications? Let's connect."
+          isInView={isInView}
+        />
 
-        <div className="grid md:grid-cols-2 gap-12">
+        <div className="grid gap-10 md:grid-cols-2 md:gap-12">
           {/* Contact Info */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -74,7 +68,7 @@ export default function Contact() {
             <div className="space-y-4">
               <a
                 href={`mailto:${personalInfo.social.email}`}
-                className="flex items-center gap-4 p-4 bg-card-dark border border-primary-teal/20 rounded-lg hover:border-primary-teal hover:bg-card-darker transition-all duration-300 group"
+                className="group flex items-center gap-4 rounded-xl border border-primary-teal/20 bg-card-dark/80 p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary-teal hover:bg-card-darker"
               >
                 <div className="w-12 h-12 bg-primary-teal/10 rounded-lg flex items-center justify-center group-hover:bg-primary-teal/20 transition-colors duration-300">
                   <svg className="w-6 h-6 text-primary-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -91,7 +85,7 @@ export default function Contact() {
                 href={personalInfo.social.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-4 p-4 bg-card-dark border border-primary-teal/20 rounded-lg hover:border-primary-teal hover:bg-card-darker transition-all duration-300 group"
+                className="group flex items-center gap-4 rounded-xl border border-primary-teal/20 bg-card-dark/80 p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary-teal hover:bg-card-darker"
               >
                 <div className="w-12 h-12 bg-primary-teal/10 rounded-lg flex items-center justify-center group-hover:bg-primary-teal/20 transition-colors duration-300">
                   <svg className="w-6 h-6 text-primary-teal" fill="currentColor" viewBox="0 0 24 24">
@@ -108,7 +102,7 @@ export default function Contact() {
                 href={personalInfo.social.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-4 p-4 bg-card-dark border border-primary-teal/20 rounded-lg hover:border-primary-teal hover:bg-card-darker transition-all duration-300 group"
+                className="group flex items-center gap-4 rounded-xl border border-primary-teal/20 bg-card-dark/80 p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary-teal hover:bg-card-darker"
               >
                 <div className="w-12 h-12 bg-primary-teal/10 rounded-lg flex items-center justify-center group-hover:bg-primary-teal/20 transition-colors duration-300">
                   <svg className="w-6 h-6 text-primary-teal" fill="currentColor" viewBox="0 0 24 24">
@@ -129,7 +123,7 @@ export default function Contact() {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="premium-card space-y-6 rounded-2xl p-6 sm:p-8">
               <div>
                 <label htmlFor="name" className="block text-sm font-semibold text-text-primary mb-2">
                   Name
@@ -141,7 +135,7 @@ export default function Contact() {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-card-dark border border-primary-teal/30 rounded-lg text-text-primary placeholder-text-secondary focus:outline-none focus:border-primary-teal transition-colors duration-200"
+                  className="w-full rounded-lg border border-primary-teal/25 bg-card-dark px-4 py-3 text-text-primary placeholder-text-secondary transition-colors duration-200 focus:border-primary-teal focus:outline-none"
                   placeholder="Your name"
                 />
               </div>
@@ -157,7 +151,7 @@ export default function Contact() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-card-dark border border-primary-teal/30 rounded-lg text-text-primary placeholder-text-secondary focus:outline-none focus:border-primary-teal transition-colors duration-200"
+                  className="w-full rounded-lg border border-primary-teal/25 bg-card-dark px-4 py-3 text-text-primary placeholder-text-secondary transition-colors duration-200 focus:border-primary-teal focus:outline-none"
                   placeholder="your.email@example.com"
                 />
               </div>
@@ -173,7 +167,7 @@ export default function Contact() {
                   onChange={handleChange}
                   required
                   rows={6}
-                  className="w-full px-4 py-3 bg-card-dark border border-primary-teal/30 rounded-lg text-text-primary placeholder-text-secondary focus:outline-none focus:border-primary-teal transition-colors duration-200 resize-none"
+                  className="w-full resize-none rounded-lg border border-primary-teal/25 bg-card-dark px-4 py-3 text-text-primary placeholder-text-secondary transition-colors duration-200 focus:border-primary-teal focus:outline-none"
                   placeholder="Tell me about your project or idea..."
                 />
               </div>
@@ -181,7 +175,7 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full px-8 py-4 bg-primary-teal text-deep-black font-semibold rounded-lg hover:bg-primary-cyan transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary-teal px-8 py-4 font-semibold text-deep-black transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary-cyan disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0"
               >
                 {isSubmitting ? (
                   <>

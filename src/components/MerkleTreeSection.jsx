@@ -4,6 +4,7 @@ import { useRef, useState } from 'react'
 import { useMerkleTree } from '../store/merkleStore'
 import MerkleTreeVisualization from './MerkleTreeVisualization'
 import ProjectDetails from './ProjectDetails'
+import SectionHeading from './SectionHeading'
 
 export default function MerkleTreeSection() {
   const ref = useRef(null)
@@ -33,56 +34,27 @@ export default function MerkleTreeSection() {
   const treeHealth = calculateTreeHealth()
 
   return (
-    <section id="merkle-tree" className="py-40 px-6 bg-gradient-to-b from-deep-black via-card-darker/30 to-deep-black relative overflow-hidden" ref={ref}>
-      {/* Subtle background pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0" style={{
-          backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(34, 211, 238, 0.15) 1px, transparent 0)',
-          backgroundSize: '40px 40px'
-        }} />
-      </div>
+    <section id="merkle-tree" className="section-shell relative overflow-hidden bg-gradient-to-b from-deep-black via-card-darker/30 to-deep-black" ref={ref}>
+      <div className="section-divider" />
+      <div className="quiet-grid absolute inset-0 opacity-60" aria-hidden="true" />
 
       <div className="max-w-7xl mx-auto relative z-10">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-20"
-        >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="inline-block mb-6"
-          >
-            <span className="px-6 py-2 bg-primary-teal/10 border border-primary-teal/30 rounded-full text-sm font-mono text-primary-teal backdrop-blur-sm">
-              Visual Centerpiece
-            </span>
-          </motion.div>
-
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-6 bg-gradient-to-r from-text-primary via-primary-teal to-text-primary bg-clip-text text-transparent">
-            Abhinav's Merkle Tree
-          </h2>
-          
-          <p className="text-text-secondary text-lg md:text-xl max-w-4xl mx-auto mb-8 leading-relaxed">
-            Every project is a cryptographic leaf in this tree. The root hash represents my complete professional identity. 
-            Click any project to explore details and witness the elegant path of verification.
-          </p>
-          
-          <div className="w-24 h-1 bg-gradient-to-r from-transparent via-primary-teal to-transparent mx-auto" />
-        </motion.div>
+        <SectionHeading
+          eyebrow="Visual Centerpiece"
+          title="Abhinav's Merkle Tree"
+          description="Every project is a cryptographic leaf. Select a project to trace its verification path, or use the tamper demo to see how integrity changes propagate."
+          isInView={isInView}
+        />
 
         {/* Tree Health & Controls */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="mb-16"
+          className="mb-12"
         >
           <div className="max-w-4xl mx-auto">
-            {/* Tree Health Indicator */}
-            <div className="mb-8 p-6 bg-card-dark/60 backdrop-blur-md border border-primary-teal/20 rounded-2xl">
+            <div className="premium-card mb-8 rounded-2xl p-5 sm:p-6">
               <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                 <div className="flex items-center gap-4">
                   <div className="relative">
@@ -122,7 +94,7 @@ export default function MerkleTreeSection() {
                       Tree Health
                     </h3>
                     <p className="text-sm text-text-secondary font-mono">
-                      {isTreeValid ? '✓ All hashes valid' : '⚠ Integrity compromised'}
+                      {isTreeValid ? 'All hashes valid' : 'Integrity compromised'}
                     </p>
                   </div>
                 </div>
@@ -137,7 +109,7 @@ export default function MerkleTreeSection() {
                         exit={{ opacity: 0, scale: 0.9 }}
                         onClick={remineTree}
                         disabled={isMining}
-                        className="px-6 py-3 bg-gradient-to-r from-accent-amber to-yellow-500 text-deep-black font-bold rounded-xl hover:shadow-lg hover:shadow-accent-amber/50 transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                        className="flex items-center gap-2 rounded-xl bg-accent-amber px-6 py-3 font-bold text-deep-black transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-accent-amber/30 disabled:cursor-not-allowed disabled:opacity-50"
                         aria-label="Re-mine the Merkle tree"
                       >
                         {isMining ? (
@@ -162,10 +134,10 @@ export default function MerkleTreeSection() {
 
                   <button
                     onClick={() => setShowTamperDemo(!showTamperDemo)}
-                    className={`px-6 py-3 font-bold rounded-xl transition-all duration-300 hover:scale-105 ${
+                    className={`rounded-xl px-6 py-3 font-bold transition-all duration-300 hover:-translate-y-0.5 ${
                       showTamperDemo
                         ? 'bg-invalid-red text-white shadow-lg shadow-invalid-red/30'
-                        : 'bg-card-dark border-2 border-primary-teal text-primary-teal hover:bg-primary-teal/10 hover:shadow-lg hover:shadow-primary-teal/20'
+                        : 'bg-card-dark border border-primary-teal/40 text-primary-teal hover:bg-primary-teal/10 hover:shadow-lg hover:shadow-primary-teal/20'
                     }`}
                     aria-label="Toggle tamper demonstration mode"
                   >
@@ -208,7 +180,7 @@ export default function MerkleTreeSection() {
                       </div>
                       <div className="flex-1">
                         <h3 className="text-lg font-bold text-text-primary mb-2">
-                          ⚡ Tamper Demonstration Mode Active
+                          Tamper demonstration mode active
                         </h3>
                         <p className="text-text-secondary leading-relaxed">
                           Click on any project leaf below to simulate data tampering. Watch in real-time as the hash invalidation 
@@ -225,34 +197,27 @@ export default function MerkleTreeSection() {
           </div>
         </motion.div>
 
-        {/* Tree Visualization */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={isInView ? { opacity: 1, scale: 1 } : {}}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="mb-20"
+          className="mb-16"
         >
           <MerkleTreeVisualization showTamperDemo={showTamperDemo} />
         </motion.div>
 
-        {/* Project Details */}
         <ProjectDetails />
 
-        {/* Educational Note */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.8 }}
-          className="mt-20"
+          className="mt-16"
         >
-          <div className="max-w-4xl mx-auto p-10 bg-gradient-to-br from-card-dark/80 to-card-darker/80 border border-primary-teal/20 rounded-2xl backdrop-blur-sm relative overflow-hidden">
-            {/* Decorative corner elements */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-primary-teal/5 rounded-bl-full" />
-            <div className="absolute bottom-0 left-0 w-32 h-32 bg-primary-cyan/5 rounded-tr-full" />
-            
+          <div className="premium-card relative mx-auto max-w-4xl overflow-hidden rounded-2xl p-7 sm:p-10">
             <div className="relative z-10">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-primary-teal/10 rounded-xl flex items-center justify-center">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-primary-teal/20 bg-primary-teal/10">
                   <svg className="w-6 h-6 text-primary-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>

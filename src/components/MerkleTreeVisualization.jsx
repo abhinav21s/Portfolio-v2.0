@@ -26,6 +26,13 @@ function TreeNode({ node, level, isHighlighted, onSelect, showTamperDemo, positi
   const isLeaf = node.type === 'leaf'
   const isInvalid = !node.isValid
   const isRoot = level === 0
+  const handleKeyDown = (event) => {
+    if (!isLeaf) return
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
+      onSelect(node.id)
+    }
+  }
 
   return (
     <motion.div
@@ -44,21 +51,22 @@ function TreeNode({ node, level, isHighlighted, onSelect, showTamperDemo, positi
         whileHover={{ scale: 1.08, y: -4 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => isLeaf && onSelect(node.id)}
+        onKeyDown={handleKeyDown}
         className={`
-          relative px-8 py-5 rounded-xl border-2 transition-all duration-500
-          ${isLeaf ? 'min-w-[240px] cursor-pointer' : isRoot ? 'min-w-[280px]' : 'min-w-[200px]'}
+          relative rounded-xl border transition-all duration-500
+          ${isLeaf ? 'min-w-[230px] cursor-pointer px-6 py-5' : isRoot ? 'min-w-[280px] px-8 py-5' : 'min-w-[190px] px-6 py-4'}
           ${isHighlighted 
             ? isInvalid 
               ? 'bg-invalid-red/20 border-invalid-red shadow-2xl shadow-invalid-red/40 animate-glow-path' 
               : 'bg-primary-teal/20 border-primary-teal shadow-2xl shadow-primary-teal/40 animate-glow-path'
             : isInvalid
               ? 'bg-card-dark/80 border-invalid-red/60 backdrop-blur-sm'
-              : 'bg-card-dark/80 border-primary-teal/30 hover:border-primary-teal/70 hover:shadow-lg hover:shadow-primary-teal/20 backdrop-blur-sm'
+              : 'bg-card-dark/80 border-primary-teal/25 hover:border-primary-teal/60 hover:shadow-lg hover:shadow-primary-teal/20 backdrop-blur-sm'
           }
-          ${isRoot ? 'border-4' : ''}
+          ${isRoot ? 'border-2' : ''}
         `}
-        role="button"
-        tabIndex={0}
+        role={isLeaf ? 'button' : undefined}
+        tabIndex={isLeaf ? 0 : undefined}
         aria-label={isLeaf ? `Project: ${node.data.title}` : isRoot ? 'Merkle Root' : `Tree node at level ${level}`}
       >
         {/* Glow effect for highlighted nodes */}
@@ -78,7 +86,7 @@ function TreeNode({ node, level, isHighlighted, onSelect, showTamperDemo, positi
 
         <div className="text-center relative z-10">
           <div className="text-xs text-text-secondary mb-2 font-mono uppercase tracking-wider">
-            {isRoot ? '🌳 Root Hash' : isLeaf ? '🍃 Leaf' : `⬡ Level ${level}`}
+            {isRoot ? 'Root Hash' : isLeaf ? 'Leaf Node' : `Level ${level}`}
           </div>
           {isLeaf && (
             <div className="text-base font-bold text-text-primary mb-3 line-clamp-2 leading-tight">
@@ -94,7 +102,7 @@ function TreeNode({ node, level, isHighlighted, onSelect, showTamperDemo, positi
               animate={{ opacity: [0.5, 1, 0.5] }}
               transition={{ duration: 2, repeat: Infinity }}
             >
-              ⚡ Click to tamper
+              Click to tamper
             </motion.div>
           )}
         </div>
@@ -110,7 +118,7 @@ function TreeNode({ node, level, isHighlighted, onSelect, showTamperDemo, positi
 
 function TreeLevel({ nodes, level, highlightedIds, onSelect, showTamperDemo, onPositionCalculated }) {
   return (
-    <div className="flex justify-center items-start gap-12 mb-20">
+    <div className="mb-20 flex items-start justify-center gap-12">
       {nodes.map((node) => (
         <TreeNode
           key={node.id}
@@ -314,11 +322,10 @@ export default function MerkleTreeVisualization({ showTamperDemo }) {
 
   return (
     <div className="relative">
-      {/* Desktop View - Tree Layout with SVG Connections */}
-      <div className="hidden lg:block">
+      <div className="hidden overflow-x-auto rounded-2xl border border-primary-teal/20 bg-deep-black/30 p-2 lg:block">
         <div 
           ref={containerRef}
-          className="relative min-h-[600px] py-12"
+          className="relative min-h-[640px] min-w-[1020px] py-14"
         >
           {/* SVG Connection Lines */}
           <ConnectionLines 
@@ -344,17 +351,15 @@ export default function MerkleTreeVisualization({ showTamperDemo }) {
         </div>
       </div>
 
-      {/* Mobile/Tablet View - Enhanced Card Grid */}
       <div className="lg:hidden">
-        {/* Root Hash Display */}
         <motion.div 
-          className="mb-10 p-8 bg-gradient-to-br from-card-dark to-card-darker border-2 border-primary-teal/40 rounded-2xl shadow-xl"
+          className="premium-card mb-8 rounded-2xl p-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
         >
           <div className="text-center">
             <div className="text-xs text-text-secondary mb-3 font-mono uppercase tracking-wider">
-              🌳 Merkle Root Hash
+              Merkle Root Hash
             </div>
             <div className={`text-lg font-mono font-bold mb-3 ${root.isValid ? 'text-primary-teal' : 'text-invalid-red'}`}>
               {shortenHash(root.hash, 8)}
@@ -368,7 +373,6 @@ export default function MerkleTreeVisualization({ showTamperDemo }) {
           </div>
         </motion.div>
 
-        {/* Project Leaves */}
         <div className="grid sm:grid-cols-2 gap-6">
           {treeLevels[treeLevels.length - 1]?.map((node, index) => (
             <motion.div
@@ -379,7 +383,7 @@ export default function MerkleTreeVisualization({ showTamperDemo }) {
               whileTap={{ scale: 0.97 }}
               onClick={() => handleNodeClick(node.id)}
               className={`
-                p-6 rounded-xl border-2 cursor-pointer transition-all duration-500 backdrop-blur-sm
+                cursor-pointer rounded-xl border p-5 backdrop-blur-sm transition-all duration-500
                 ${highlightedPath.includes(node.id)
                   ? node.isValid
                     ? 'bg-primary-teal/20 border-primary-teal shadow-2xl shadow-primary-teal/30'
@@ -391,7 +395,7 @@ export default function MerkleTreeVisualization({ showTamperDemo }) {
               `}
             >
               <div className="flex items-start justify-between mb-3">
-                <span className="text-xs text-text-secondary font-mono">🍃 LEAF</span>
+                <span className="text-xs text-text-secondary font-mono">LEAF</span>
                 <div className={`w-3 h-3 rounded-full ${node.isValid ? 'bg-valid-green' : 'bg-invalid-red'}`} />
               </div>
               
@@ -413,7 +417,6 @@ export default function MerkleTreeVisualization({ showTamperDemo }) {
                   animate={{ opacity: [0.5, 1, 0.5] }}
                   transition={{ duration: 2, repeat: Infinity }}
                 >
-                  <span>⚡</span>
                   <span>Tap to tamper</span>
                 </motion.div>
               )}

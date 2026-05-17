@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
 import { beyondTheChain } from '../data/portfolioData'
+import SectionHeading from './SectionHeading'
 
 function HobbyCard({ hobby, index, isInView }) {
   return (
@@ -9,7 +10,7 @@ function HobbyCard({ hobby, index, isInView }) {
       initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="bg-card-dark border border-primary-teal/20 rounded-lg p-6 hover:border-primary-teal/40 transition-all duration-300 hover:shadow-lg hover:shadow-primary-teal/10 group"
+      className="premium-card group rounded-xl p-6 transition-all duration-300 hover:-translate-y-1 hover:border-primary-teal/40"
     >
       <div className="text-5xl mb-4 group-hover:scale-110 transition-transform duration-300">
         {hobby.icon}
@@ -29,22 +30,15 @@ export default function BeyondTheChain() {
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
   return (
-    <section id="beyond" className="py-32 px-6 bg-deep-black" ref={ref}>
+    <section id="beyond" className="section-shell bg-deep-black" ref={ref}>
+      <div className="section-divider" />
       <div className="max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Beyond the Chain
-          </h2>
-          <p className="text-text-secondary text-lg max-w-2xl mx-auto">
-            Off-chain activities that strengthen on-chain performance. Life is about balance, discipline, and continuous growth.
-          </p>
-          <div className="w-20 h-1 bg-primary-teal mx-auto mt-6" />
-        </motion.div>
+        <SectionHeading
+          eyebrow="Beyond"
+          title="Beyond the Chain"
+          description="Off-screen habits that keep the engineering process balanced, precise, and sustainable."
+          isInView={isInView}
+        />
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {beyondTheChain.map((hobby, index) => (
@@ -64,7 +58,7 @@ export default function BeyondTheChain() {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mt-16 text-center"
         >
-          <div className="max-w-3xl mx-auto p-8 bg-card-dark border-l-4 border-primary-teal rounded-lg">
+          <div className="premium-card mx-auto max-w-3xl rounded-2xl border-l-4 border-l-primary-teal p-8">
             <p className="text-xl text-text-primary italic mb-4">
               "Excellence is not a destination; it's a continuous journey that requires discipline, patience, and the courage to keep improving."
             </p>

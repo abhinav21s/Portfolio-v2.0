@@ -17,11 +17,10 @@ export default function ProjectDetails() {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 50 }}
         transition={{ duration: 0.4 }}
-        className="mt-12 relative"
+        className="relative mt-12"
       >
-        <div className="bg-card-dark border-2 border-primary-teal rounded-xl overflow-hidden shadow-2xl shadow-primary-teal/20">
-          {/* Header */}
-          <div className="bg-gradient-to-r from-primary-teal/20 to-primary-cyan/20 px-8 py-6 border-b border-primary-teal/30">
+        <div className="premium-card overflow-hidden rounded-2xl border-primary-teal/40">
+          <div className="border-b border-primary-teal/20 bg-primary-teal/10 px-6 py-5 sm:px-8 sm:py-6">
             <div className="flex items-start justify-between">
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
@@ -32,13 +31,13 @@ export default function ProjectDetails() {
                     {shortenHash(selectedProject.id, 4)}
                   </span>
                 </div>
-                <h3 className="text-3xl font-bold text-text-primary mb-2">
+                <h3 className="mb-2 text-2xl font-bold text-text-primary sm:text-3xl">
                   {selectedProject.title}
                 </h3>
               </div>
               <button
                 onClick={clearSelection}
-                className="p-2 hover:bg-card-darker rounded-lg transition-colors duration-200"
+                className="rounded-lg p-2 transition-colors duration-200 hover:bg-card-darker"
                 aria-label="Close project details"
               >
                 <svg className="w-6 h-6 text-text-secondary hover:text-text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -48,8 +47,7 @@ export default function ProjectDetails() {
             </div>
           </div>
 
-          {/* Content */}
-          <div className="p-8">
+          <div className="p-6 sm:p-8">
             <div className="grid md:grid-cols-2 gap-8">
               {/* Left Column */}
               <div className="space-y-6">
@@ -102,7 +100,7 @@ export default function ProjectDetails() {
                   {selectedProject.metrics && (
                     <div className="grid grid-cols-2 gap-3">
                       {Object.entries(selectedProject.metrics).map(([key, value]) => (
-                        <div key={key} className="bg-card-darker p-4 rounded-lg border border-primary-teal/20">
+                        <div key={key} className="rounded-lg border border-primary-teal/20 bg-card-darker/70 p-4">
                           <div className="text-2xl font-bold text-primary-teal mb-1">
                             {value}
                           </div>
