@@ -1,19 +1,19 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useMerkleTree } from '../store/merkleStore'
 import { shortenHash } from '../utils/merkleTree'
-import { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 
 function TreeNode({ node, level, isHighlighted, onSelect, showTamperDemo, onPositionCalculated }) {
-  const nodeRef = useRef(null)
+  const nodeRef = React.useRef(null)
   
-  useEffect(() => {
+  React.useEffect(() => {
     if (nodeRef.current && onPositionCalculated) {
       const rect = nodeRef.current.getBoundingClientRect()
       const parentRect = nodeRef.current.offsetParent?.getBoundingClientRect()
       if (parentRect) {
         onPositionCalculated(node.id, {
-          x: rect.left - parentRect.left + rect.width / 2,
-          y: rect.top - parentRect.top + rect.height / 2,
+          x: Math.round(rect.left - parentRect.left + rect.width / 2),
+          y: Math.round(rect.top - parentRect.top + rect.height / 2),
         })
       }
     }
@@ -36,8 +36,8 @@ function TreeNode({ node, level, isHighlighted, onSelect, showTamperDemo, onPosi
         whileHover={{ y: -5 }}
         onClick={() => (isLeaf || showTamperDemo) && onSelect(node.id)}
         className={`
-          relative rounded-2xl border transition-all duration-500 p-5 text-center
-          ${isLeaf ? 'min-w-[200px] cursor-pointer' : 'min-w-[160px]'}
+          relative rounded-xl border transition-all duration-500 p-4 text-center
+          ${isLeaf ? 'min-w-[160px] cursor-pointer' : 'min-w-[130px]'}
           ${isHighlighted 
             ? isInvalid ? 'bg-invalid-red/[0.08] border-invalid-red shadow-[0_0_20px_rgba(239,68,68,0.15)]' : 'bg-primary-teal/[0.08] border-primary-teal shadow-[0_0_20px_rgba(34,211,238,0.15)]'
             : isInvalid ? 'bg-white/[0.02] border-invalid-red/40' : 'bg-white/[0.02] border-white/5 hover:border-white/20'
@@ -45,16 +45,16 @@ function TreeNode({ node, level, isHighlighted, onSelect, showTamperDemo, onPosi
           ${isRoot ? 'border-primary-teal/40 bg-primary-teal/[0.04]' : ''}
         `}
       >
-        <div className="text-[9px] uppercase tracking-[0.2em] text-text-secondary font-mono mb-2">
+        <div className="text-[8px] uppercase tracking-[0.2em] text-text-secondary font-mono mb-2">
           {isRoot ? 'Root Hash' : isLeaf ? 'Leaf Node' : `Branch L${level}`}
         </div>
         {isLeaf && (
-          <div className="text-sm font-display font-bold text-text-primary mb-2 truncate max-w-[160px]">
+          <div className="text-xs font-display font-bold text-text-primary mb-1 truncate max-w-[140px]">
             {node.data.title}
           </div>
         )}
-        <div className={`text-[11px] font-mono font-medium tracking-tight ${isInvalid ? 'text-invalid-red' : 'text-primary-teal/90'}`}>
-          {shortenHash(node.hash, 12)}
+        <div className={`text-[10px] font-mono font-medium tracking-tight ${isInvalid ? 'text-invalid-red' : 'text-primary-teal/90'}`}>
+          {shortenHash(node.hash, 10)}
         </div>
 
         {/* Verification Status */}
@@ -114,11 +114,11 @@ function ConnectionLines({ nodePositions, treeLevels, highlightedPath }) {
 
 export default function MerkleTreeVisualization({ showTamperDemo }) {
   const { root, highlightedPath, selectLeaf, tamperWithLeaf } = useMerkleTree()
-  const [treeLevels, setTreeLevels] = useState([])
-  const [nodePositions, setNodePositions] = useState({})
-  const containerRef = useRef(null)
+  const [treeLevels, setTreeLevels] = React.useState([])
+  const [nodePositions, setNodePositions] = React.useState({})
+  const containerRef = React.useRef(null)
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!root) return
     const levels = []
     const queue = [{ node: root, level: 0 }]
@@ -134,9 +134,15 @@ export default function MerkleTreeVisualization({ showTamperDemo }) {
     setTreeLevels(levels)
   }, [root])
 
-  const handlePositionCalculated = (nodeId, position) => {
-    setNodePositions(prev => ({ ...prev, [nodeId]: position }))
-  }
+  const handlePositionCalculated = React.useCallback((nodeId, position) => {
+    setNodePositions(prev => {
+      // Only update if the position has actually changed to prevent infinite loops
+      if (prev[nodeId]?.x === position.x && prev[nodeId]?.y === position.y) {
+        return prev
+      }
+      return { ...prev, [nodeId]: position }
+    })
+  }, [])
 
   const handleNodeClick = (nodeId) => {
     if (showTamperDemo) tamperWithLeaf(nodeId)

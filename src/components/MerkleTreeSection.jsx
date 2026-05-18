@@ -26,12 +26,12 @@ export default function MerkleTreeSection() {
   const treeHealth = calculateTreeHealth()
 
   return (
-    <section id="merkle-tree" className="relative overflow-hidden scroll-mt-24">
+    <section id="merkle-tree" className="relative overflow-hidden scroll-mt-24 py-24 md:py-32">
       <div className="container-custom">
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12 mb-20">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12 mb-24">
           <div className="max-w-3xl">
             <h2 className="text-sm font-mono text-primary-teal uppercase tracking-[0.3em] mb-6">Proof of Work</h2>
-            <h3 className="text-4xl md:text-6xl font-display font-bold text-text-primary mb-8">Merkle Tree Verification</h3>
+            <h3 className="text-4xl md:text-6xl font-display font-bold text-text-primary mb-8 leading-tight">Merkle Tree Verification</h3>
             <p className="text-text-secondary text-lg leading-relaxed max-w-2xl font-light">
               Every project is a cryptographic leaf in this tree. Select a project below to trace its verification path, or use the tamper demo to see how blockchain-grade integrity works.
             </p>
@@ -73,8 +73,8 @@ export default function MerkleTreeSection() {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-12">
           <div className="lg:col-span-1 p-6 rounded-2xl bg-white/[0.02] border border-white/5 flex flex-col justify-center gap-4">
              <div className="flex items-center gap-4">
-                <div className="relative w-14 h-14">
-                  <svg className="w-full h-full transform -rotate-90">
+                <div className="relative w-16 h-16 flex items-center justify-center">
+                  <svg className="w-14 h-14 transform -rotate-90" viewBox="0 0 56 56">
                     <circle cx="28" cy="28" r="24" stroke="rgba(255,255,255,0.03)" strokeWidth="4" fill="none" />
                     <motion.circle
                       cx="28" cy="28" r="24"
@@ -86,7 +86,7 @@ export default function MerkleTreeSection() {
                       transition={{ duration: 1.5, ease: "easeOut" }}
                     />
                   </svg>
-                  <div className="absolute inset-0 flex items-center justify-center text-xs font-bold font-mono text-text-primary">
+                  <div className="absolute inset-0 flex items-center justify-center text-[11px] font-bold font-mono text-text-primary">
                     {treeHealth}%
                   </div>
                 </div>

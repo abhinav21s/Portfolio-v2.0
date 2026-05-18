@@ -1,7 +1,6 @@
 import { Suspense, lazy } from 'react'
 import Hero from './components/Hero'
 import Navigation from './components/Navigation'
-import ScrollProgress from './components/ScrollProgress'
 import BackToTop from './components/BackToTop'
 import { MerkleTreeProvider } from './store/merkleStore'
 
@@ -18,12 +17,11 @@ function App() {
   return (
     <MerkleTreeProvider>
       <div className="min-h-screen bg-deep-black text-text-primary selection:bg-primary-teal/30">
-        <a href="#about" className="skip-link">
+        <a href="#main-content" className="skip-link">
           Skip to content
         </a>
-        <ScrollProgress />
         <Navigation />
-        <main>
+        <main id="main-content">
           <Hero />
           <Suspense
             fallback={

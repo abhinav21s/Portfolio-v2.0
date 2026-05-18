@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { personalInfo } from '../data/portfolioData'
+import ScrollProgress from './ScrollProgress'
 
 const navItems = [
   { id: 'home', label: 'Home' },
@@ -85,7 +86,7 @@ export default function Navigation() {
         </button>
 
         {/* Desktop Nav */}
-        <div className="hidden items-center gap-2 rounded-full border border-white/5 bg-white/5 p-1 backdrop-blur-md lg:flex">
+        <div className="hidden items-center gap-1 rounded-full border border-white/5 bg-white/5 p-1 backdrop-blur-md lg:flex">
           {navItems.map((item) => {
             const isActive = activeSection === item.id
             return (
@@ -110,22 +111,11 @@ export default function Navigation() {
         </div>
 
         <div className="hidden items-center gap-6 lg:flex">
-          <a
-            href={personalInfo.social.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm font-medium text-text-secondary transition-colors hover:text-primary-teal"
-          >
-            GitHub
-          </a>
           <button
             onClick={() => handleNavClick('contact')}
-            className="group relative overflow-hidden rounded-full bg-text-primary px-6 py-2.5 text-sm font-bold text-deep-black transition-all hover:pr-8 active:scale-95"
+            className="group relative overflow-hidden rounded-full bg-text-primary px-6 py-2.5 text-sm font-bold text-deep-black transition-all hover:bg-primary-teal active:scale-95"
           >
-            <span className="relative z-10 transition-all group-hover:translate-x-[-2px]">Let's Work Together</span>
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 opacity-0 transition-all group-hover:opacity-100 group-hover:translate-x-0 translate-x-4">
-              →
-            </span>
+            <span className="relative z-10">Let's Connect</span>
           </button>
         </div>
 
@@ -163,29 +153,11 @@ export default function Navigation() {
                   {item.label}
                 </button>
               ))}
-              <hr className="border-white/5" />
-              <div className="flex items-center gap-6">
-                 <a
-                  href={personalInfo.social.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-text-secondary"
-                >
-                  GitHub
-                </a>
-                 <a
-                  href={personalInfo.social.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-text-secondary"
-                >
-                  LinkedIn
-                </a>
-              </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
+      <ScrollProgress />
     </header>
   )
 }

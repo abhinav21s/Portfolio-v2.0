@@ -11,6 +11,7 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
+  font-size: 14.5px; /* Further reduced from 15px */
 }
 
 body {
@@ -62,21 +63,21 @@ p {
 section {
   position: relative;
   isolation: isolate;
-  padding-top: 5rem;
-  padding-bottom: 5rem;
+  padding-top: 3.5rem;
+  padding-bottom: 3.5rem;
 }
 
 @media (min-width: 1024px) {
   section {
-    padding-top: 8rem;
-    padding-bottom: 8rem;
+    padding-top: 5.5rem;
+    padding-bottom: 5.5rem;
   }
 }
 
 /* Container */
 .container-custom {
   width: 100%;
-  max-width: 80rem; /* 1280px */
+  max-width: 60rem; /* Reduced from 64rem */
   margin-left: auto;
   margin-right: auto;
   padding-left: 1.5rem;
@@ -85,9 +86,26 @@ section {
 
 @media (min-width: 768px) {
   .container-custom {
-    padding-left: 3rem;
-    padding-right: 3rem;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
   }
+}
+
+/* Skip link styling */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  background: #22D3EE;
+  color: #050505;
+  padding: 8px 16px;
+  z-index: 100;
+  transition: top 0.3s;
+  font-weight: bold;
+}
+
+.skip-link:focus {
+  top: 0;
 }
 
 /* Premium card */
@@ -142,4 +160,3 @@ section {
 .underline-hover:hover::after {
   width: 100%;
 }
-

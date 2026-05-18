@@ -29,22 +29,22 @@ export default function Hero() {
           
           {/* Profile Photo */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="relative order-1 lg:order-none"
+            className="relative"
           >
-            <div className="relative w-[140px] h-[140px] md:w-[160px] md:h-[160px] rounded-full p-[1px] bg-gradient-to-tr from-white/20 to-white/5 shadow-2xl">
-              <div className="w-full h-full rounded-full overflow-hidden bg-card-darker">
+            <div className="relative w-[140px] h-[140px] md:w-[160px] md:h-[160px] rounded-full p-[2px] bg-gradient-to-tr from-primary-teal to-primary-cyan shadow-[0_0_30px_rgba(34,211,238,0.2)]">
+              <div className="w-full h-full rounded-full overflow-hidden bg-card-darker border-4 border-deep-black">
                 <img
                   src={personalInfo.photo}
                   alt={personalInfo.name}
-                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                  className="w-full h-full object-cover transition-all duration-700"
                 />
               </div>
             </div>
             {/* Status Indicator */}
-            <div className="absolute bottom-3 right-3 w-4 h-4 bg-valid-green rounded-full border-2 border-deep-black shadow-[0_0_15px_rgba(34,211,238,0.4)]" />
+            <div className="absolute bottom-2 right-2 w-5 h-5 bg-valid-green rounded-full border-4 border-deep-black shadow-[0_0_15px_rgba(20,184,166,0.5)]" />
           </motion.div>
 
           {/* Text Content */}
@@ -54,17 +54,20 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             >
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-8">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-teal/5 border border-primary-teal/10 mb-6">
                 <span className="w-2 h-2 rounded-full bg-primary-teal animate-pulse" />
-                <span className="text-[10px] font-mono text-text-secondary uppercase tracking-[0.2em]">Available for Opportunities</span>
+                <span className="text-[11px] font-bold text-primary-teal uppercase tracking-widest">Available for Opportunities</span>
               </div>
               
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold text-text-primary tracking-tight mb-8">
-                Building <span className="text-primary-teal italic">verifiable</span> systems.
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold text-text-primary tracking-tight mb-2">
+                {personalInfo.name}
               </h1>
+              <h2 className="text-xl md:text-2xl lg:text-3xl font-display font-semibold text-primary-teal mb-5">
+                {personalInfo.title}
+              </h2>
               
-              <p className="text-xl md:text-2xl text-text-secondary max-w-2xl mx-auto lg:mx-0 leading-relaxed mb-12 font-light">
-                Hi, I'm <span className="text-text-primary font-medium">{personalInfo.name}</span>. {personalInfo.tagline}
+              <p className="text-base md:text-lg text-text-secondary max-w-xl mx-auto lg:mx-0 leading-relaxed mb-8">
+                Building reliable backend systems and exploring blockchain technology.
               </p>
             </motion.div>
 
@@ -72,18 +75,18 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-wrap justify-center lg:justify-start gap-6"
+              className="flex flex-wrap justify-center lg:justify-start gap-4"
             >
               <button
                 onClick={() => scrollToSection('projects')}
-                className="group relative px-8 py-4 bg-text-primary text-deep-black font-bold rounded-full overflow-hidden transition-all hover:scale-[1.02] active:scale-95"
+                className="group relative px-7 py-3.5 bg-text-primary text-deep-black font-bold rounded-full overflow-hidden transition-all hover:scale-[1.02] active:scale-95"
               >
                 <span className="relative z-10">View My Work</span>
                 <div className="absolute inset-0 bg-primary-teal translate-y-full transition-transform group-hover:translate-y-0" />
               </button>
               <button
                 onClick={() => scrollToSection('merkle-tree')}
-                className="px-8 py-4 border border-white/10 hover:border-white/20 hover:bg-white/5 transition-all text-text-primary font-bold rounded-full"
+                className="px-7 py-3.5 border border-white/10 hover:border-white/20 hover:bg-white/5 transition-all text-text-primary font-bold rounded-full"
               >
                 Explore Tree
               </button>
