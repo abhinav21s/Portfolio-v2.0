@@ -80,8 +80,48 @@ export default function MerkleTreeSection() {
             </div>
           </div>
 
+          {/* Dynamic Instruction Banner */}
+          <motion.div
+            initial={false}
+            animate={{ 
+              backgroundColor: showTamperDemo ? 'rgba(239, 68, 68, 0.15)' : 'rgba(34, 211, 238, 0.1)',
+              borderColor: showTamperDemo ? 'rgba(239, 68, 68, 0.3)' : 'rgba(34, 211, 238, 0.2)'
+            }}
+            className="p-5 rounded-2xl border-2 flex items-center gap-5 transition-colors duration-500 shadow-xl"
+          >
+            <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-colors duration-500 ${
+              showTamperDemo ? 'bg-invalid-red/30 text-invalid-red' : 'bg-primary-teal/30 text-primary-teal'
+            }`}>
+              {showTamperDemo ? (
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              ) : (
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              )}
+            </div>
+            <div className="flex-1">
+              <h4 className={`text-[16px] font-extrabold transition-colors duration-500 mb-0.5 ${showTamperDemo ? 'text-invalid-red' : 'text-primary-teal'}`}>
+                {showTamperDemo ? 'Tamper Mode Activated' : 'Interactive Mode'}
+              </h4>
+              <p className="text-[15px] text-text-primary leading-relaxed font-semibold">
+                {showTamperDemo 
+                  ? 'Click on any project node below to edit its data and break the Merkle Tree. Observe the cryptographic impact.' 
+                  : 'Click on any project node below to see its details and technical specifications.'}
+              </p>
+            </div>
+            {tamperedLeafIds.length > 0 && (
+              <div className="hidden sm:flex flex-col items-end gap-1 px-4 border-l border-white/10">
+                <span className="text-[10px] font-mono text-invalid-red uppercase tracking-widest font-bold">Corrupted Paths</span>
+                <span className="text-xl font-display font-bold text-invalid-red">{tamperedLeafIds.length}</span>
+              </div>
+            )}
+          </motion.div>
+
           {merkleRoot && (
-            <div className="premium-card p-4 rounded-2xl flex items-center justify-between border-primary-teal/20 bg-primary-teal/[0.02] overflow-hidden relative">
+            <div className="premium-card mt-6 p-4 rounded-2xl flex items-center justify-between border-primary-teal/20 bg-primary-teal/[0.02] overflow-hidden relative">
               <div className="absolute inset-0 bg-gradient-to-r from-primary-teal/5 to-transparent pointer-events-none" />
               <div className="relative z-10 flex flex-col gap-1">
                 <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-primary-teal/70">Current Merkle Root Hash</span>
@@ -96,46 +136,6 @@ export default function MerkleTreeSection() {
               </div>
             </div>
           )}
-
-          {/* Dynamic Instruction Banner */}
-          <motion.div
-            initial={false}
-            animate={{ 
-              backgroundColor: showTamperDemo ? 'rgba(239, 68, 68, 0.1)' : 'rgba(34, 211, 238, 0.05)',
-              borderColor: showTamperDemo ? 'rgba(239, 68, 68, 0.2)' : 'rgba(34, 211, 238, 0.1)'
-            }}
-            className="mt-6 p-4 rounded-2xl border flex items-center gap-4 transition-colors duration-500"
-          >
-            <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors duration-500 ${
-              showTamperDemo ? 'bg-invalid-red/20 text-invalid-red' : 'bg-primary-teal/20 text-primary-teal'
-            }`}>
-              {showTamperDemo ? (
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                </svg>
-              ) : (
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              )}
-            </div>
-            <div className="flex-1">
-              <h4 className={`text-sm font-bold transition-colors duration-500 ${showTamperDemo ? 'text-invalid-red' : 'text-primary-teal'}`}>
-                {showTamperDemo ? 'Tamper Mode Activated' : 'Interactive Mode'}
-              </h4>
-              <p className="text-xs text-text-secondary leading-relaxed">
-                {showTamperDemo 
-                  ? 'Click on any project node below to edit its data and break the Merkle Tree. Observe the cryptographic impact.' 
-                  : 'Click on any project node below to see its details and technical specifications.'}
-              </p>
-            </div>
-            {tamperedLeafIds.length > 0 && (
-              <div className="hidden sm:flex flex-col items-end gap-1">
-                <span className="text-[10px] font-mono text-invalid-red uppercase tracking-widest font-bold">Corrupted Paths</span>
-                <span className="text-lg font-display font-bold text-invalid-red">{tamperedLeafIds.length}</span>
-              </div>
-            )}
-          </motion.div>
         </div>
 
         <div className="space-y-6">

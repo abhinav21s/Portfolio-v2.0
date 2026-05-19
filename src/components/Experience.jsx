@@ -41,12 +41,12 @@ export default function Experience() {
                   </h4>
                   <p className="text-primary-cyan text-sm font-medium mb-1">{exp.company}</p>
                   <p className="text-[10px] font-mono text-primary-teal/70 uppercase tracking-widest mb-3">{exp.type}</p>
-                  <p className="text-xs md:text-sm text-text-secondary leading-relaxed mb-4">
+                  <p className="text-[14px] text-text-secondary leading-relaxed mb-4">
                     {exp.description}
                   </p>
                   <ul className={`flex flex-wrap gap-2 ${i % 2 === 0 ? 'md:justify-end' : ''}`}>
                     {exp.achievements.map((ach, idx) => (
-                      <li key={idx} className="text-[10px] text-text-secondary bg-white/[0.03] border border-white/5 px-2 py-0.5 rounded-full">
+                      <li key={idx} className="text-[14px] font-medium text-text-secondary bg-white/[0.03] border border-white/5 px-3 py-1 rounded-full">
                         {ach}
                       </li>
                     ))}
