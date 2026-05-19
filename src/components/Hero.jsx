@@ -100,14 +100,16 @@ export default function Hero() {
               className="mt-16 flex flex-wrap items-center justify-center lg:justify-start gap-8 border-t border-white/5 pt-8"
             >
               <div className="flex flex-col gap-1">
-                <span className="text-sm font-mono text-primary-teal">{root ? shortenHash(root.hash, 12) : '...'}</span>
+                <span className={`text-sm font-mono transition-colors duration-500 ${isTreeValid ? 'text-primary-teal' : 'text-invalid-red'}`}>
+                  {root ? shortenHash(root.hash, 10) : '...'}
+                </span>
                 <span className="text-[10px] text-text-secondary uppercase tracking-widest">Merkle Root Status</span>
               </div>
-              <div className="h-8 w-[1px] bg-white/5" />
+              <div className="h-8 w-[1px] bg-white/5 hidden sm:block" />
               <div className="flex items-center gap-3">
-                <div className={`w-2 h-2 rounded-full ${isTreeValid ? 'bg-valid-green' : 'bg-invalid-red'} shadow-[0_0_10px_rgba(34,211,238,0.2)]`} />
-                <span className="text-xs font-mono text-text-secondary uppercase tracking-wider">
-                  {isTreeValid ? 'Verified Integrity' : 'Syncing...'}
+                <div className={`w-2 h-2 rounded-full transition-all duration-500 ${isTreeValid ? 'bg-valid-green' : 'bg-invalid-red'} shadow-[0_0_10px_rgba(34,211,238,0.2)]`} />
+                <span className={`text-xs font-mono uppercase tracking-wider transition-colors duration-500 ${isTreeValid ? 'text-text-secondary' : 'text-invalid-red'}`}>
+                  {isTreeValid ? 'Verified Integrity' : 'System Corrupted'}
                 </span>
               </div>
             </motion.div>

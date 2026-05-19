@@ -31,14 +31,16 @@ export function shortenHash(hash, length = 6) {
 /**
  * Create a leaf node from project data
  * @param {Object} project - Project data
+ * @param {string} salt - Optional salt for fresh hashes
  * @returns {Promise<Object>} - Leaf node with hash
  */
-export async function createLeafNode(project) {
+export async function createLeafNode(project, salt = '') {
   const data = JSON.stringify({
     id: project.id,
     title: project.title,
     description: project.description,
-    techStack: project.techStack
+    techStack: project.techStack,
+    salt // Include salt to change hash even if data is same
   })
   const hash = await generateHash(data)
   

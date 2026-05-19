@@ -1,9 +1,9 @@
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useMerkleTree } from '../store/merkleStore'
 import { shortenHash } from '../utils/merkleTree'
-import React, { useState, useEffect, useRef, useCallback } from 'react'
+import React from 'react'
 
-function TreeNode({ node, level, isHighlighted, onSelect, showTamperDemo, onPositionCalculated, isCompact }) {
+function TreeNode({ node, level, isHighlighted, onSelect, showTamperDemo, onPositionCalculated, isCompact, onLeafClick }) {
   const nodeRef = React.useRef(null)
 
   React.useEffect(() => {
@@ -34,7 +34,15 @@ function TreeNode({ node, level, isHighlighted, onSelect, showTamperDemo, onPosi
     >
       <motion.div
         whileHover={{ y: -5 }}
-        onClick={() => isLeaf && onSelect(node.id)}
+        onClick={() => {
+          if (isLeaf) {
+            if (showTamperDemo && onLeafClick) {
+              onLeafClick(node.id)
+            } else {
+              onSelect(node.id)
+            }
+          }
+        }}
         className={`
           relative rounded-xl border transition-all duration-500 text-center
           ${isCompact ? 'p-3 min-w-[120px]' : 'p-4 min-w-[150px]'}
@@ -125,8 +133,8 @@ function ConnectionLines({ nodePositions, treeLevels, highlightedPath }) {
   )
 }
 
-export default function MerkleTreeVisualization({ showTamperDemo, isCompact = false }) {
-  const { root, highlightedPath, selectLeaf, tamperWithLeaf } = useMerkleTree()
+export default function MerkleTreeVisualization({ showTamperDemo, isCompact = false, onLeafClick }) {
+  const { root, highlightedPath, selectLeaf } = useMerkleTree()
   const [treeLevels, setTreeLevels] = React.useState([])
   const [nodePositions, setNodePositions] = React.useState({})
   const containerRef = React.useRef(null)
@@ -157,8 +165,7 @@ export default function MerkleTreeVisualization({ showTamperDemo, isCompact = fa
   }, [])
 
   const handleNodeClick = (nodeId) => {
-    if (showTamperDemo) tamperWithLeaf(nodeId)
-    else selectLeaf(nodeId)
+    selectLeaf(nodeId)
   }
 
   if (!root) return null
@@ -188,6 +195,7 @@ export default function MerkleTreeVisualization({ showTamperDemo, isCompact = fa
                   showTamperDemo={showTamperDemo}
                   onPositionCalculated={handlePositionCalculated}
                   isCompact={isCompact}
+                  onLeafClick={onLeafClick}
                 />
               ))}
             </div>
