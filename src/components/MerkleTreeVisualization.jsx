@@ -164,10 +164,10 @@ export default function MerkleTreeVisualization({ showTamperDemo, isCompact = fa
   if (!root) return null
 
   return (
-    <div className={`relative ${isCompact ? 'p-4 w-full' : 'p-8 lg:p-12 w-full overflow-x-hidden'}`}>
+    <div className={`relative ${isCompact ? 'p-4 w-full' : 'p-8 lg:p-12 w-full'}`}>
       <div
         ref={containerRef}
-        className={`relative mx-auto w-full ${isCompact ? 'min-h-[480px]' : 'min-h-[600px]'}`}
+        className={`relative mx-auto ${isCompact ? 'w-full min-h-[480px]' : 'min-w-max w-full min-h-[600px]'}`}
       >
         <ConnectionLines
           nodePositions={nodePositions}

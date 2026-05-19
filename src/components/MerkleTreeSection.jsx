@@ -104,7 +104,7 @@ export default function MerkleTreeSection() {
                 </button>
               </div>
 
-              <div className="flex-1 min-h-0 bg-white/[0.02] border border-white/5 rounded-[2.5rem] overflow-y-auto overflow-x-hidden relative custom-scrollbar">
+              <div className="flex-1 min-h-0 bg-white/[0.02] border border-white/5 rounded-[2.5rem] overflow-y-auto overflow-x-auto relative custom-scrollbar">
                 <MerkleTreeVisualization showTamperDemo={showTamperDemo} isCompact={false} />
               </div>
 
