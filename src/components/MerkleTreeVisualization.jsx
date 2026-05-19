@@ -99,7 +99,7 @@ function ConnectionLines({ nodePositions, treeLevels, highlightedPath }) {
           <motion.path
             key={i}
             d={path}
-            stroke={isHighlighted ? (isInvalid ? '#EF4444' : '#22D3EE') : 'rgba(255,255,255,0.05)'}
+            stroke={isHighlighted ? (isInvalid ? '#EF4444' : '#22D3EE') : 'rgba(255,255,255,0.15)'}
             strokeWidth={isHighlighted ? 2 : 1}
             fill="none"
             initial={{ pathLength: 0 }}
