@@ -5,126 +5,150 @@ import MerkleTreeVisualization from './MerkleTreeVisualization'
 import ProjectDetails from './ProjectDetails'
 
 export default function MerkleTreeSection() {
-  const { isTreeValid, isMining, remineTree, root } = useMerkleTree()
+  const { isMining, remineTree, tamperedLeafId, isTreeValid, selectedLeaf, clearSelection } = useMerkleTree()
   const [showTamperDemo, setShowTamperDemo] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(false)
 
-  const calculateTreeHealth = () => {
-    if (!root) return 100
-    let totalNodes = 0
-    let validNodes = 0
-    const traverse = (node) => {
-      if (!node) return
-      totalNodes++
-      if (node.isValid) validNodes++
-      if (node.left) traverse(node.left)
-      if (node.right) traverse(node.right)
-    }
-    traverse(root)
-    return totalNodes > 0 ? Math.round((validNodes / totalNodes) * 100) : 100
-  }
-
-  const treeHealth = calculateTreeHealth()
+  const treeHealth = isTreeValid ? 100 : 65
 
   return (
-    <section id="merkle-tree" className="relative overflow-hidden scroll-mt-24 py-24 md:py-32">
+    <section id="merkle-tree" className="relative scroll-mt-24">
       <div className="container-custom">
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12 mb-24">
-          <div className="max-w-3xl">
-            <h2 className="text-sm font-mono text-primary-teal uppercase tracking-[0.3em] mb-6">Proof of Work</h2>
-            <h3 className="text-4xl md:text-6xl font-display font-bold text-text-primary mb-8 leading-tight">Merkle Tree Verification</h3>
-            <p className="text-text-secondary text-lg leading-relaxed max-w-2xl font-light">
-              Every project is a cryptographic leaf in this tree. Select a project below to trace its verification path, or use the tamper demo to see how blockchain-grade integrity works.
-            </p>
-          </div>
-          
-          <div className="flex flex-wrap gap-4 items-center">
+        <div className="max-w-5xl mb-10">
+          <h2 className="text-sm font-mono text-primary-teal uppercase tracking-[0.3em] mb-6">Cryptographic Integrity</h2>
+          <h3 className="text-4xl md:text-6xl font-display font-bold text-text-primary mb-6">Merkle Tree Ledger</h3>
+          <div className="flex flex-wrap items-center gap-4">
+            <div className="flex items-center gap-3 text-sm font-mono uppercase tracking-widest">
+              <span className="text-text-secondary">System Integrity</span>
+              <span className={isTreeValid ? 'text-primary-teal' : 'text-invalid-red'}>{treeHealth}%</span>
+              <span className={`h-2 w-2 rounded-full ${isTreeValid ? 'bg-valid-green animate-pulse-slow' : 'bg-invalid-red animate-pulse-fast'}`} />
+            </div>
+            <div className="h-px w-12 bg-white/10" />
             <button
               onClick={() => setShowTamperDemo(!showTamperDemo)}
-              className={`px-6 py-3 rounded-2xl font-bold transition-all flex items-center gap-3 border ${
-                showTamperDemo 
-                ? 'bg-invalid-red/10 border-invalid-red/50 text-invalid-red shadow-lg shadow-invalid-red/10' 
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${
+                showTamperDemo
+                ? 'bg-invalid-red/10 border-invalid-red/50 text-invalid-red shadow-lg shadow-invalid-red/10'
                 : 'bg-white/[0.03] border-white/10 text-text-primary hover:border-primary-teal/50 hover:bg-white/[0.06]'
               }`}
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
               {showTamperDemo ? 'Stop Tampering' : 'Try Tamper Demo'}
             </button>
-
-            {!isTreeValid && (
-              <motion.button
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                onClick={remineTree}
-                disabled={isMining}
-                className="px-6 py-3 rounded-2xl bg-primary-teal text-deep-black font-bold flex items-center gap-3 hover:scale-[1.02] transition-transform disabled:opacity-50"
-              >
-                {isMining ? (
-                   <svg className="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" /></svg>
-                ) : (
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
-                )}
-                {isMining ? 'Mining...' : 'Re-mine Tree'}
-              </motion.button>
+            <button
+              onClick={remineTree}
+              disabled={isMining || isTreeValid}
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${
+                isMining || isTreeValid
+                ? 'opacity-50 cursor-not-allowed bg-white/[0.01] border-white/5 text-text-secondary'
+                : 'bg-primary-teal/10 border-primary-teal/50 text-primary-teal hover:bg-primary-teal hover:text-deep-black shadow-lg shadow-primary-teal/10'
+              }`}
+            >
+              {isMining ? 'Mining...' : 'Re-mine Tree'}
+            </button>
+            {tamperedLeafId && (
+              <span className="text-xs font-mono uppercase tracking-widest text-invalid-red animate-pulse">
+                Mutation detected at {tamperedLeafId}
+              </span>
             )}
           </div>
         </div>
 
-        {/* Tree Integrity Status Overlay (Fixed or neatly placed) */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-12">
-          <div className="lg:col-span-1 p-6 rounded-2xl bg-white/[0.02] border border-white/5 flex flex-col justify-center gap-4">
-             <div className="flex items-center gap-4">
-                <div className="relative w-16 h-16 flex items-center justify-center">
-                  <svg className="w-14 h-14 transform -rotate-90" viewBox="0 0 56 56">
-                    <circle cx="28" cy="28" r="24" stroke="rgba(255,255,255,0.03)" strokeWidth="4" fill="none" />
-                    <motion.circle
-                      cx="28" cy="28" r="24"
-                      stroke={treeHealth === 100 ? "#22D3EE" : "#EF4444"}
-                      strokeWidth="4" fill="none"
-                      strokeLinecap="round"
-                      initial={{ strokeDasharray: "0 151" }}
-                      animate={{ strokeDasharray: `${(treeHealth/100)*151} 151` }}
-                      transition={{ duration: 1.5, ease: "easeOut" }}
-                    />
-                  </svg>
-                  <div className="absolute inset-0 flex items-center justify-center text-[11px] font-bold font-mono text-text-primary">
-                    {treeHealth}%
-                  </div>
-                </div>
-                <div>
-                  <div className="text-[10px] uppercase tracking-[0.2em] text-text-secondary font-mono mb-1">System Health</div>
-                  <div className={`text-sm font-bold font-display ${treeHealth === 100 ? 'text-primary-teal' : 'text-invalid-red'}`}>
-                    {treeHealth === 100 ? 'Integrity Verified' : 'Integrity Compromised'}
-                  </div>
-                </div>
-             </div>
-          </div>
+        <div className="space-y-6">
+            <div className="premium-card rounded-3xl p-6 relative overflow-hidden flex flex-col items-center justify-center min-h-[580px]">
+              <div className="absolute top-6 left-6 z-20">
+                <h4 className="text-sm font-display font-bold text-text-primary mb-1">Visual Ledger</h4>
+                <p className="text-[10px] text-text-secondary font-mono uppercase tracking-widest">Compact View</p>
+              </div>
 
-          <AnimatePresence>
-            {showTamperDemo && (
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                className="lg:col-span-3 p-6 rounded-2xl bg-invalid-red/[0.03] border border-invalid-red/20 backdrop-blur-sm flex items-center gap-6"
+              <button
+                onClick={() => setIsExpanded(true)}
+                className="absolute top-6 right-6 z-20 px-4 py-2 rounded-xl text-[10px] font-bold bg-white/5 border border-white/10 text-text-primary hover:bg-primary-teal hover:text-deep-black transition-all uppercase tracking-widest"
               >
-                <div className="w-12 h-12 rounded-full bg-invalid-red/10 flex items-center justify-center text-invalid-red shrink-0 animate-pulse">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                </div>
-                <p className="text-sm text-invalid-red/90 leading-relaxed font-light">
-                  <strong className="block mb-1 text-base">Simulation Mode: Data Tampering</strong>
-                  Click on any project leaf below to simulate an attack. Watch as the hash collision breaks the entire branch's verification up to the root.
-                </p>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
+                Expand Tree
+              </button>
 
-        <MerkleTreeVisualization showTamperDemo={showTamperDemo} />
-        
-        <div className="mt-32">
-          <ProjectDetails />
+              <MerkleTreeVisualization showTamperDemo={showTamperDemo} isCompact={true} />
+            </div>
         </div>
       </div>
+
+      {/* Expanded Tree Modal */}
+      <AnimatePresence>
+        {isExpanded && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-deep-black/90 backdrop-blur-xl flex items-center justify-center p-4 md:p-12"
+            onClick={() => setIsExpanded(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="w-full max-w-7xl h-full flex flex-col"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex justify-between items-center mb-8">
+                <div>
+                  <h4 className="text-2xl font-display font-bold text-text-primary">Interactive Merkle Ledger</h4>
+                  <p className="text-sm text-text-secondary font-mono uppercase tracking-widest mt-1">Full Explorer Mode</p>
+                </div>
+                <button
+                  onClick={() => setIsExpanded(false)}
+                  className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-text-primary hover:bg-invalid-red hover:text-white transition-all"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              <div className="flex-1 min-h-0 bg-white/[0.02] border border-white/5 rounded-[2.5rem] overflow-y-auto overflow-x-hidden relative custom-scrollbar">
+                <MerkleTreeVisualization showTamperDemo={showTamperDemo} isCompact={false} />
+              </div>
+
+              <div className="mt-8 text-center text-text-secondary text-xs font-light">
+                Click on any project node to view details or try the tamper demo to see blockchain integrity in action.
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Project Details Modal */}
+      <AnimatePresence>
+        {selectedLeaf && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[110] bg-deep-black/80 backdrop-blur-md flex items-center justify-center p-4"
+            onClick={clearSelection}
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 20 }}
+              className="premium-card rounded-3xl overflow-hidden max-w-md w-full flex flex-col relative"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={clearSelection}
+                className="absolute top-3 right-3 z-30 w-7 h-7 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-text-primary hover:bg-invalid-red hover:text-white transition-all shadow-lg backdrop-blur-sm"
+                aria-label="Close project details"
+              >
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+              <div className="flex-1">
+                <ProjectDetails />
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   )
 }

@@ -3,9 +3,9 @@ import { useMerkleTree } from '../store/merkleStore'
 import { shortenHash } from '../utils/merkleTree'
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 
-function TreeNode({ node, level, isHighlighted, onSelect, showTamperDemo, onPositionCalculated }) {
+function TreeNode({ node, level, isHighlighted, onSelect, showTamperDemo, onPositionCalculated, isCompact }) {
   const nodeRef = React.useRef(null)
-  
+
   React.useEffect(() => {
     if (nodeRef.current && onPositionCalculated) {
       const rect = nodeRef.current.getBoundingClientRect()
@@ -34,31 +34,44 @@ function TreeNode({ node, level, isHighlighted, onSelect, showTamperDemo, onPosi
     >
       <motion.div
         whileHover={{ y: -5 }}
-        onClick={() => (isLeaf || showTamperDemo) && onSelect(node.id)}
+        onClick={() => isLeaf && onSelect(node.id)}
         className={`
-          relative rounded-xl border transition-all duration-500 p-4 text-center
-          ${isLeaf ? 'min-w-[160px] cursor-pointer' : 'min-w-[130px]'}
-          ${isHighlighted 
+          relative rounded-xl border transition-all duration-500 text-center
+          ${isCompact ? 'p-3 min-w-[120px]' : 'p-4 min-w-[150px]'}
+          ${isLeaf && !isCompact ? 'min-w-[180px] cursor-pointer' : isLeaf ? 'cursor-pointer' : ''}
+          ${isHighlighted
             ? isInvalid ? 'bg-invalid-red/[0.08] border-invalid-red shadow-[0_0_20px_rgba(239,68,68,0.15)]' : 'bg-primary-teal/[0.08] border-primary-teal shadow-[0_0_20px_rgba(34,211,238,0.15)]'
             : isInvalid ? 'bg-white/[0.02] border-invalid-red/40' : 'bg-white/[0.02] border-white/5 hover:border-white/20'
           }
           ${isRoot ? 'border-primary-teal/40 bg-primary-teal/[0.04]' : ''}
         `}
       >
-        <div className="text-[8px] uppercase tracking-[0.2em] text-text-secondary font-mono mb-2">
-          {isRoot ? 'Root Hash' : isLeaf ? 'Leaf Node' : `Branch L${level}`}
-        </div>
+        {!isCompact && (
+          <div className="text-[8px] uppercase tracking-[0.2em] text-text-secondary font-mono mb-2">
+            {isRoot ? 'Root Hash' : isLeaf ? 'Leaf Node' : `Branch L${level}`}
+          </div>
+        )}
+
         {isLeaf && (
-          <div className="text-xs font-display font-bold text-text-primary mb-1 truncate max-w-[140px]">
+          <div className={`${isCompact ? 'text-[10px] max-w-[105px]' : 'text-xs max-w-[150px]'} font-display font-bold text-text-primary mb-1 truncate`}>
             {node.data.title}
           </div>
         )}
-        <div className={`text-[10px] font-mono font-medium tracking-tight ${isInvalid ? 'text-invalid-red' : 'text-primary-teal/90'}`}>
-          {shortenHash(node.hash, 10)}
+
+        <div className={`
+          font-mono font-medium tracking-tight
+          ${isCompact ? 'text-[8px]' : 'text-[10px]'}
+          ${isInvalid ? 'text-invalid-red' : 'text-primary-teal/90'}
+        `}>
+          {shortenHash(node.hash, isCompact ? 6 : 10)}
         </div>
 
         {/* Verification Status */}
-        <div className={`absolute -top-1.5 -right-1.5 w-3 h-3 rounded-full border-2 border-deep-black ${isInvalid ? 'bg-invalid-red shadow-[0_0_8px_rgba(239,68,68,0.4)]' : 'bg-valid-green shadow-[0_0_8px_rgba(34,211,238,0.4)]'}`} />
+        <div className={`
+          absolute -top-1 -right-1 rounded-full border border-deep-black
+          ${isCompact ? 'w-2 h-2' : 'w-3 h-3 border-2'}
+          ${isInvalid ? 'bg-invalid-red shadow-[0_0_8px_rgba(239,68,68,0.4)]' : 'bg-valid-green shadow-[0_0_8px_rgba(34,211,238,0.4)]'}
+        `} />
       </motion.div>
     </motion.div>
   )
@@ -66,21 +79,21 @@ function TreeNode({ node, level, isHighlighted, onSelect, showTamperDemo, onPosi
 
 function ConnectionLines({ nodePositions, treeLevels, highlightedPath }) {
   const connections = []
-  
+
   treeLevels.forEach((levelNodes, levelIndex) => {
     if (levelIndex === treeLevels.length - 1) return
-    
+
     levelNodes.forEach(parentNode => {
       if (parentNode.type === 'internal') {
         const parentPos = nodePositions[parentNode.id]
-        
+
         if (parentNode.left) {
           const leftPos = nodePositions[parentNode.left.id]
           if (parentPos && leftPos) {
             connections.push({ from: parentPos, to: leftPos, isHighlighted: highlightedPath.includes(parentNode.id) && highlightedPath.includes(parentNode.left.id), isInvalid: !parentNode.isValid || !parentNode.left.isValid })
           }
         }
-        
+
         if (parentNode.right) {
           const rightPos = nodePositions[parentNode.right.id]
           if (parentPos && rightPos) {
@@ -112,7 +125,7 @@ function ConnectionLines({ nodePositions, treeLevels, highlightedPath }) {
   )
 }
 
-export default function MerkleTreeVisualization({ showTamperDemo }) {
+export default function MerkleTreeVisualization({ showTamperDemo, isCompact = false }) {
   const { root, highlightedPath, selectLeaf, tamperWithLeaf } = useMerkleTree()
   const [treeLevels, setTreeLevels] = React.useState([])
   const [nodePositions, setNodePositions] = React.useState({})
@@ -136,7 +149,6 @@ export default function MerkleTreeVisualization({ showTamperDemo }) {
 
   const handlePositionCalculated = React.useCallback((nodeId, position) => {
     setNodePositions(prev => {
-      // Only update if the position has actually changed to prevent infinite loops
       if (prev[nodeId]?.x === position.x && prev[nodeId]?.y === position.y) {
         return prev
       }
@@ -152,20 +164,20 @@ export default function MerkleTreeVisualization({ showTamperDemo }) {
   if (!root) return null
 
   return (
-    <div className="relative premium-card rounded-3xl p-8 lg:p-12 overflow-x-auto">
-      <div 
+    <div className={`relative ${isCompact ? 'p-4 w-full' : 'p-8 lg:p-12 w-full overflow-x-hidden'}`}>
+      <div
         ref={containerRef}
-        className="relative min-w-[800px] min-h-[500px]"
+        className={`relative mx-auto w-full ${isCompact ? 'min-h-[480px]' : 'min-h-[600px]'}`}
       >
-        <ConnectionLines 
+        <ConnectionLines
           nodePositions={nodePositions}
           treeLevels={treeLevels}
           highlightedPath={highlightedPath}
         />
-        
-        <div className="relative z-10 flex flex-col gap-24">
+
+        <div className={`relative z-10 flex flex-col ${isCompact ? 'gap-16' : 'gap-24'}`}>
           {treeLevels.map((levelNodes, levelIdx) => (
-            <div key={levelIdx} className="flex justify-around items-center">
+            <div key={levelIdx} className="flex justify-around items-center gap-4">
               {levelNodes.map(node => (
                 <TreeNode
                   key={node.id}
@@ -175,6 +187,7 @@ export default function MerkleTreeVisualization({ showTamperDemo }) {
                   onSelect={handleNodeClick}
                   showTamperDemo={showTamperDemo}
                   onPositionCalculated={handlePositionCalculated}
+                  isCompact={isCompact}
                 />
               ))}
             </div>

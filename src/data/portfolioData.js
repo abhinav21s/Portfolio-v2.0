@@ -34,7 +34,6 @@ export const skills = {
       "REST APIs",
       "JWT Authentication",
       "Supabase",
-      "Postman",
       "Caching & Indexing"
     ]
   },
@@ -49,7 +48,7 @@ export const skills = {
     ]
   },
 
-  
+
 
   blockchain: {
     title: "Blockchain & Web3",
@@ -81,7 +80,15 @@ export const projects = [
   {
     id: "proj-001",
     title: "Voyage Valt",
+    tagline: "AI-Powered Travel Planner",
     description: "Developed an AI-powered travel planning application that generates personalized itineraries, calculates multi-modal transit routes (driving, walking,cycling) with real-time distance and cost estimation, and provides interactive map visualizations for trip management.",
+    features: [
+      "AI-generated personalized itineraries",
+      "Multi-modal route planning with ETAs",
+      "Weather integration",
+      "Nearby attractions",
+      "Trip saving with Firebase"
+    ],
     techStack: ["React","Express.js", "Tailwind CSS", "Shadcn UI", "Framer Motion","Firebase", "Groq SDK", "Leaflet Maps", "OpenStreetMap API"],
     challenges: "Replacing Google services with open-source alternatives (Leaflet + OpenStreetMap) while achieving comparable performance and accuracy, designing effective prompts for realistic AI itinerary generation, integrating multiple APIs seamlessly, and implementing complex multi-modal route calculations with estimated time and cost.",
     results: "Successfully transformed a basic travel planner into a feature-rich application by adding dynamic multi-modal routing, weather integration, nearby places, and Firebase persistence for saving trips.",
@@ -96,7 +103,15 @@ export const projects = [
   {
   id: "proj-002",
   title: "VaultX",
+  tagline: "Web3 Wallet Dashboard",
   description: "A modern Web3 wallet dashboard for Ethereum and EVM-compatible chains. Supports multiple wallet connections, real-time balance tracking, transaction history, and secure token transfers.",
+  features: [
+    "Multi-wallet connection support",
+    "Real-time balance tracking",
+    "Transaction history",
+    "Secure token transfers",
+    "EVM chain support"
+  ],
   techStack: ["React", "Wagmi", "Viem", "Reown AppKit", "Node.js", "Express", "MongoDB", "JWT"],
   challenges: "Implementing secure multi-wallet integration across multiple EVM chains, managing wallet state persistence, and ensuring smooth real-time updates on network/account changes.",
   results: "Built a clean and functional Web3 wallet dashboard with multi-wallet support and seamless interaction with Ethereum and Layer 2 networks.",
@@ -113,7 +128,15 @@ export const projects = [
   {
   id: "proj-003",
   title: "Decentralized Voting System",
+  tagline: "Hybrid Blockchain Voting Platform",
   description: "A hybrid decentralized voting platform combining traditional authentication with blockchain immutability. Features MFA login (Aadhar + OTP + optional face verification) and on-chain vote recording.",
+  features: [
+    "Multi-factor voter authentication",
+    "On-chain vote recording",
+    "Smart contract powered election flow",
+    "Hybrid off-chain and blockchain architecture",
+    "Secure frontend and backend integration"
+  ],
   techStack: ["React", "Node.js", "Express", "MySQL", "Solidity", "Hardhat", "Ethers.js"],
   challenges: "Integrating multi-factor authentication with blockchain voting while maintaining security, privacy, and a smooth user experience across frontend, backend, and smart contract layers.",
   results: "Developed a complete end-to-end decentralized voting application with secure hybrid architecture (off-chain auth + on-chain voting).",
@@ -129,7 +152,15 @@ export const projects = [
   {
   id: "proj-004",
   title: "Golf Charity Platform",
+  tagline: "Subscription-Based Golf Charity App",
   description: "A subscription-based platform for golfers to track Stableford scores, participate in monthly prize draws, and automatically contribute to chosen charities with every payment.",
+  features: [
+    "Stableford score tracking",
+    "Stripe subscription payments",
+    "Monthly prize draws",
+    "Charity contribution flow",
+    "Responsive golfer dashboard"
+  ],
   techStack: ["React", "Tailwind CSS", "Shadcn/UI", "Node.js", "Express", "Supabase", "Stripe"],
   challenges: "Building a complete subscription system with Stripe integration, implementing a fair monthly draw mechanism, and creating an engaging UI/UX for golf score tracking and charity contributions.",
   results: "Developed a full-stack subscription platform that combines sports tracking, gamification, and charitable giving.",
@@ -140,13 +171,21 @@ export const projects = [
   },
   links: {
     github: "https://github.com/abhinav21s/golf-charity",
-  
+
   }
 },
   {
   id: "proj-005",
   title: "Non-Custodial Web Wallet",
+  tagline: "Client-Side Ethereum Wallet",
   description: "A secure, non-custodial Ethereum wallet where the browser generates and encrypts the seed phrase. Private keys never leave the client side while supporting email-based login and multi-account derivation.",
+  features: [
+    "Client-side seed phrase generation",
+    "Encrypted local key storage",
+    "Email-based login flow",
+    "HD wallet account derivation",
+    "Non-custodial security model"
+  ],
   techStack: ["React", "Node.js", "Express", "MongoDB", "Ethers.js", "BIP-39"],
   challenges: "Implementing secure client-side seed generation and encryption while maintaining usability through email login and enabling HD wallet account derivation without compromising security.",
   results: "Created a MetaMask-like non-custodial wallet experience with encrypted seed storage and multi-account support.",
@@ -158,7 +197,8 @@ export const projects = [
   links: {
     github: "https://github.com/abhinav21s/web-wallet"
   }
-}
+},
+
 ]
 
 export const experience = [
